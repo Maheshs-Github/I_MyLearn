@@ -1,0 +1,850 @@
+GSAP stands for GreenSock Animation Platform
+
+It is a JS Library used to create smooth and fast Animation for Web.
+We can animate anything as HTML elements, JS Objects, etc
+
+✅ Why use GSAP?
+Performance: Extremely fast and smooth animations.
+Cross-browser compatibility: Works the same in all major browsers.
+Ease of use: Simple syntax but very powerful.
+Advanced control: Pause, reverse, repeat, timeline sequencing, etc.
+Works with frameworks: React, Vue, Angular, etc.
+
+
+Firstly What is a Animation?
+Well u watch Anime right? they are nothing but a sequence of Images played one after another
+Animation is just the process of diplaying images, frames,etc one by one rapidly
+
+
+Common Things We Animate on Web:
+Position (x, y)
+Size (width, height, scale)
+Color
+Opacity (fade in/out)
+Rotation
+Text or SVG drawing
+
+e.g creating the hover effect when we hoevr on button can be also count as Animation as we are going from one state to another, that's just a transition
+
+
+
+
+
+
+------- Let's first understand about the Creating Animations with CSS ------
+
+---- 1. With transition
+🔹 What is a Transition?
+A transition is a way to animate the change of a CSS property from one value to another over time when the element changes state (e.g., hover, click, focus).
+
+🧱 Basic Syntax:
+
+transition: property duration timing-function delay;
+🔹 Example:
+
+transition: background-color 0.5s ease-in;
+🔑 Core Concepts:
+Concept	Explanation
+🔁 Triggered by state change	Like :hover, :active, :focus, or JS class toggle
+🧠 Only listed properties animate	If not listed in transition, they change instantly
+🧩 Multiple properties	Use comma , to animate more than one
+⏱ ease, linear, ease-in, ease-out, ease-in-out	Control speed curve
+⌛ Optional delay	Add delay using last parameter
+
+🎨 Common Properties to Animate:
+color, background-color, border-color
+width, height, margin, padding
+opacity, box-shadow
+transform (translate, scale, rotate)
+
+🚫 You can’t transition:
+display
+position (but can animate top, left, etc. if already positioned)
+
+
+.Div1
+{
+  height: 100px;
+  width: 100px;
+  border: 2px solid black;
+  background-color: aqua;
+  /* transition: all 5s ease-out; */
+  transition: height 5s ease-out , background-color 5s ease-out;
+  /* transition: height 10s ease-in-out; */
+}
+.Div1:hover
+{
+  height: 200px;
+  /* width: 200px; */
+  /* position: fixed; */
+  /* top: 10px;
+  right: 10px; */
+  background-color: rgb(245, 165, 52);
+}
+/* .Div1:active
+{
+  height: 200px;
+  background-color: blueviolet;
+} */
+
+
+----Let's see some more,  if we want use transition on  any element we will use /* transition: all 5s ease-out; */ there , that transition will get Triggered when the state is changed of that element and  from what we have mention in a .Div1:hover  or any other , it will animate it 
+also if u have wrote all it will animate everything from .Div1:hover, or we can just add what we want like above Example, also if u haven't add any attribute(like above example it will animate that immediately)
+.Div1
+{
+  height: 100px;
+  width: 100px;
+  border: 2px solid black;
+  background-color: aqua;
+  transition: height 10s ease-in-out; 
+}
+.Div1:hover
+{
+  height: 200px;
+  background-color: rgb(245, 165, 52);
+}
+
+background-color will be immediately applied ,as we haven't mention in a transition that attribute(go with all then) 
+
+
+------~.Div1
+{
+  height: 100px;
+  width: 100px;
+   border:2px solid black;
+  transition: all 10s ease-in-out; 
+}
+.Div1:hover
+{
+  height: 200px; 
+  background-color: rgb(245, 165, 52);
+}        
+
+So our initial state didn't had the bg-color but final, but our transition goes from initial to final to animate
+but as long as browser can measure initial state by default You are good to go
+
+
+
+
+
+------   In HTML terms 
+style="height:100px;"
+Here,  Style--> attribute,  height--> element,  100px ---> value
+
+
+
+
+
+----- Let's see about the transform then
+
+--- 🎯 What is transform in CSS?
+The transform property allows you to visually manipulate an element by:
+Moving it (translate)
+Scaling it (scale)
+Rotating it (rotate)
+Skewing it (skew)
+Or combining all of them!
+
+---- (It doesn't change any actual height, etc just visually) ---
+
+💡 All of this happens without affecting layout — meaning other elements around it won’t shift
+
+
+--- ❓ Is transform the same as height, width, etc.?
+🔸 No, but here's the right way to think about it:
+height, width, etc. are individual CSS properties that directly affect the box model of the element.
+transform is a separate property that can visually alter things like size, position, rotation, skew, etc. — without touching the actual box model layout.
+
+👉 Think of transform as a “visual effect layer” on top of other properties like height and width.
+
+The Question is bcoz look at above example
+
+-- transition with height,etc property
+/* .Div1
+{
+  height: 100px;
+  width: 100px;
+  border: 2px solid black; */
+  /* background-color: aqua; */
+  /* transition: all 5s ease-out 1s; */
+/* } */
+/* .Div1:hover
+{
+  height: 200px; */
+  /* width: 200px; */
+  /* background-color: rgb(245, 165, 52);
+} */
+
+
+--- transition with  transform property
+.Div1
+{
+  height: 100px;
+  width: 100px;
+  border: 2px solid black;
+  background-color: burlywood;
+  transition: transform 2s ease-in 1s;
+}
+.Div1:hover
+{
+  /* transform: translateY(100px); */
+}
+
+
+
+
+----- Now let's go deep into the main transform values:
+
+🔹 1. translateX() / translateY() / translate()
+Moves the element along X or Y axis.
+
+transform: translateX(50px);    /* Move right */
+transform: translateY(-20px);   /* Move up */
+transform: translate(50px, -20px); /* Move diagonally */
+🧠 Doesn't affect the layout — just visual shift.
+
+🔹 2. scale() / scaleX() / scaleY()
+Resizes the element visually (not actual height or width).
+
+transform: scale(1.5);         /* 150% of original size */
+transform: scaleX(2);          /* Width doubled */
+transform: scaleY(0.5);        /* Height halved */
+🟨 Great for hover zoom effects.
+
+🔹 3. rotate()
+Rotates the element clockwise (default) or counter-clockwise.
+
+transform: rotate(45deg);     /* Rotates 45 degrees */
+transform: rotate(-30deg);    /* Rotates -30 degrees (CCW) */
+🧠 You can set the pivot point using transform-origin.
+
+🔹 4. skew() / skewX() / skewY()
+Tilts the element like it's leaning.
+
+transform: skew(20deg, 10deg);  /* X and Y skew */
+transform: skewX(15deg);
+transform: skewY(-10deg);
+Less commonly used but fun in creative designs.
+
+
+
+  --- If u have to write Multiple transform properties for single element
+
+  --Don't write it like( here scale will override the translate)
+  -1.  .Div1:hover
+{
+  /* transform: translateY(100px); */
+  /* transform: scaleY(0.5); */
+}
+
+ -2. Here too
+ .Div1:hover
+{
+  /* transform: translateY(100px); */
+
+}
+.Div1:hover
+{
+  /* transform: scale(1.5); */
+}
+
+--- Solution (write them as in one line)
+.Div1:hover
+{
+   /* transform: translateY(100px) scale(1.5); */
+
+}
+
+
+
+
+---- Let's see little about the box-shadow
+box-shadow: offset-x offset-y blur-radius spread-radius color;
+box-shadow: 5px 4px 12px 17px black;
+
+
+  offset-x	Horizontal position of the shadow (left/right) (space for shadow on x axis),
+  If i set the offset-x to the 10px , so shadow will be 10px away from it's origin position
+🔹 offset-y	Vertical position of the shadow (up/down)
+🔹 spread-radius	How much the shadow grows or shrinks outward from the box
+🔹 blur-radius	How soft or sharp the shadow looks (blur)
+
+
+
+---- Some other important properties
+1. box-shadow
+.Div1
+{
+  height: 100px;
+  width: 100px;
+  border: 2px solid black;
+  background-color: burlywood;
+    transition: box-shadow 2s ease-out;
+
+}
+.Div1:hover
+{
+    box-shadow: 4px 4px 10px 10px rgb(117, 201, 240);
+}
+
+2. Opacity
+.Div1
+{
+  height: 100px;
+  width: 100px;
+  border: 2px solid black;
+  background-color: burlywood;
+  opacity:1;
+    transition: opacity 2s ease-out;
+
+}
+.Div1:hover
+{
+    opacity: 4px 4px 10px 10px rgb(117, 201, 240);
+}
+
+3. border-radius
+4. color
+
+
+
+
+
+
+------- What are @keyframes (animation in CSS)?-------
+
+
+@keyframes is a CSS rule used to define multi-step animations.
+
+Unlike transition (which animates between just two states), @keyframes lets you create complex animations by defining multiple stages with custom timings.
+
+
+ CSS Animation Shorthand Example:
+
+.myBox {
+  animation: bounce 2s ease-in-out 1s infinite alternate forwards;
+}
+This is the shorthand, and it's equal to:
+
+animation-name: bounce;
+animation-duration: 2s;
+animation-timing-function: ease-in-out;
+animation-delay: 1s;
+animation-iteration-count: infinite;
+animation-direction: alternate;
+animation-fill-mode: forwards;
+📘 Each Animation Property Explained (Simple Style):
+✅ animation-name
+What? Name of your keyframes.
+
+animation-name: bounce;
+
+@keyframes bounce {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50px); }
+}
+✅ animation-duration
+What? How long one animation cycle runs.
+
+animation-duration: 2s; /* 2 seconds */
+✅ animation-timing-function
+What? How the speed flows.
+
+animation-timing-function: ease;          /* starts slow, ends slow */
+animation-timing-function: ease-in;       /* starts slow */
+animation-timing-function: ease-out;      /* ends slow */
+animation-timing-function: linear;        /* same speed */
+animation-timing-function: steps(5);      /* jump in steps */
+✅ animation-delay
+What? How long to wait before animation starts.
+
+animation-delay: 1s; /* start after 1 second */
+✅ animation-iteration-count
+What? How many times to repeat.
+
+animation-iteration-count: 1;        /* run once */
+animation-iteration-count: infinite; /* loop forever */
+animation-iteration-count: 3;        /* repeat 3 times */
+✅ animation-direction
+What? In which direction animation runs.
+
+animation-direction: normal;            /* 0% to 100% (default) */
+animation-direction: reverse;           /* 100% to 0% */
+animation-direction: alternate;         /* 0%→100%, then 100%→0% */
+animation-direction: alternate-reverse; /* 100%→0%, then 0%→100% */
+✅ animation-fill-mode
+What? Whether animation styles stay after it ends.
+
+animation-fill-mode: none;      /* no final styles kept (default) */
+animation-fill-mode: forwards;  /* keep 100% state after end */
+animation-fill-mode: backwards; /* apply 0% state during delay */
+animation-fill-mode: both;      /* apply both 0% and 100% as needed */
+🔁 Shorthand Format Reminder:
+
+animation: name duration timing-function delay iteration-count direction fill-mode;
+📌 Not all are required — you can leave some out.
+
+✅ Try This: Full Example
+
+@keyframes glowBox {
+  0%   { background-color: red; transform: scale(1); }
+  50%  { background-color: orange; transform: scale(1.2); }
+  100% { background-color: red; transform: scale(1); }
+}
+
+.box {
+  width: 100px;
+  height: 100px;
+  animation: glowBox 3s ease-in-out 0s infinite alternate forwards;
+}
+
+
+
+
+
+
+
+
+
+------------ Let's go for GSAP then ------------
+
+
+| Tool              | Used For                                  | Common With    |
+| ----------------- | ----------------------------------------- | -------------- |
+| **ScrollTrigger** | Scroll animations (with GSAP)             | GSAP           |
+| **Three.js**      | 3D graphics and effects                   | WebGL, Blender |
+| **Locomotive.js** | Smooth scrolling, parallax, scroll events | ScrollTrigger  |
+| **Swiper.js**     | Sliders, carousels, mobile swipes         | Any web UI     |
+
+
+
+Well let's set up the GSAP
+created 3 files and link the CDN
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSAP Basics</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Hello there</h1>
+    <div class="Div1"></div>
+    <div class="Div2"></div>
+
+    <!-- <h1>Hello There</h1> -->
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"
+      integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+
+
+
+
+✅ 1. What is gsap.to()?
+
+gsap.to(".box", {
+  x: 300,
+  duration: 2
+});
+🟢 Meaning: Animate the element from its current state → to the values you set
+⏱️ duration is in seconds
+🚀 x: 300 means move right 300px using transform: translateX(300px)
+
+✅ 2. What is gsap.from()?
+
+gsap.from(".box", {
+  x: 300,
+  duration: 2
+});
+🟢 Meaning: Animate the element from a starting value → to its natural/original state
+
+So here, .box will start from 300px to the right, and animate back to wherever it is in the layout.
+
+✅ 3. What is gsap.fromTo()?
+
+gsap.fromTo(".box", {
+  x: 300            // start from here
+}, {
+  x: 0,             // go to here
+  duration: 2
+});
+🟢 Use this when you want to explicitly control both the start and end positions
+⚠️ Useful when from() or to() alone don’t give the expected result
+
+✅ 4. repeat and yoyo — How looping works
+
+gsap.to(".box", {
+  x: 300,
+  duration: 2,
+  repeat: -1,   // 🔁 infinite loop
+  yoyo: true    // ⬅️ comes back to starting point
+});
+
+--- Property	Purpose
+repeat: -1	Loop forever
+repeat: 1	Run twice (original + 1 repeat)
+repeat: 5 (5+1 times)
+yoyo: true/false	(Go to target → then return)
+
+💡 Without yoyo, it will just restart from the beginning on each loop
+With yoyo, it bounces back each time (like loop)
+
+
+5.  If we have something like 
+    <div class="Div1"></div>
+    <div class="Div2"></div>
+    <div></div>
+    <div></div>
+    <div></div>
+
+    gsap.from("div", {
+  opacity: 0,
+  duration: 1,
+  // delay: 1,
+  x: 200,
+  // stagger: 3,
+  // stagger: -3,
+  stagger: 1,
+  repeat: 2,
+});
+
+So here we have 6 div but if we animate them all at once they will animate linear(all at once), but if i want them to move(animate) one by one, then what i can do is that, 
+one div is animating for duration of 1 then , what i can do is add stagger:1(so full durtion of 1s will be taken by one one div, so 6div*1s=6s)
+Also remember that if duration is of 3s, then make sure to give the stagger as 3s as well (stagger as tells that how long it should wait until u get to the  next element)
+Also we use stagger on same elements i mean like multiple div or multiple h1,etc (same elements)
+
+
+--- ✅ 6. Why and How to use gsap.timeline()
+
+// gsap.to(".Div1", {
+//   x: 500,
+//   rotate: 360,
+//   duration: 2,
+//   delay: 1,
+// });
+// gsap.to(".Div2", {
+//   x: 500,
+//   scale: 1.1,
+//   backgroundColor: "orange",
+//   duration: 2,
+//   delay: 3,
+// });
+// gsap.to(".Div3", {
+//   x: 500,
+//   rotate: 360,
+//   opcity: 0.2,
+//   duration: 2,
+//   delay: 5,
+// });
+
+  Well here we wanted to set the animation for our 3 respective div ( i mean like when one Div1 finishes it's animation 2nd should begin and respective,  but here Div1 had duration of 2 and delay of 1 , so for Div2 it should have the delay of the 3(bcoz 1st should complete it's animation then and then 2nd should continue, so we need calculate the delay each but with timeline it perform automatically(animate 1 after another)) )
+
+const t1 = gsap.timeline();
+t1.to(".Div1", {
+  x: 500,
+  rotate: 360,
+  duration: 2,
+  delay: 1,
+})
+  .to(".Div2", {
+    x: 500,
+    scale: 1.1,
+    duration: 2,
+  })
+  .to(".Div3", {
+    x: 500,
+    backgroundColor: "aqua",
+    borderRadius: "20px",
+    delay: 1,
+  });
+  Yup there is no need calculate here,
+🧠 Use timeline when:
+You have multiple animations
+You want them to play in order
+
+
+
+
+------ well let's just take 1 example here
+    We are creating NavBar , let's disccus about something
+---HTML    <!-- Example with timeline -->
+    <div class="Nav">
+      <h2>Name Here</h2>
+      <div class="Opns">
+        <h4>Home</h4>
+        <h4>Page</h4>
+        <h4>About</h4>
+        <h4>Contact</h4>
+      </div>
+    </div>
+
+--- CSS    
+ .Nav
+ {
+      display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px;
+    background-color: blueviolet;
+ }
+ .Opns
+ {
+      display: flex;
+    gap: 27px;
+ }
+ So here i want to make understanding about one thng is that , when we were creating the Nav, we set our outer to 
+       display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    that's why our Opns part got at right side and we didn't need to set much there
+
+
+--- JS
+    const t2 = gsap.timeline();
+
+t2.from(".Nav h2", {
+  x: -40,
+  scale: 0.8,
+  duration: 1,
+  opacity: 0,
+  delay: 0.4,
+});
+
+gsap.from(".Opns h4", {
+  x: 40,
+  scale: 0.8,
+  duration: 2,
+  opacity: 0,
+  delay: 0.4,
+});
+well just see for urself, well we could have set 
+
+
+
+
+----- ✅ Full Example with All Key Properties + Comments
+
+<div class="box"></div>
+
+<style>
+  .box {
+    width: 100px;
+    height: 100px;
+    background-color: teal;
+    margin: 50px;
+    position: relative;
+    border-radius: 0;
+    opacity: 1;
+  }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+  gsap.to(".box", {
+    duration: 3,              // Total time to complete the animation
+    delay: 1,                 // Wait 1 second before starting
+    x: 300,                   // Move 300px to the right (translateX)
+    y: 100,                   // Move 100px down (translateY)
+    scale: 1.5,               // Enlarge the element to 1.5x its size
+    rotate: 180,              // Rotate 180 degrees clockwise
+    skewX: 15,                // Skew horizontally by 15 degrees
+    backgroundColor: "pink", // Change the background color to pink
+    color: "white",           // Change text color (if there’s text inside)
+    borderRadius: "20px",     // Round the corners of the box
+    width: "200px",           // Change width to 200px
+    height: "150px",          // Change height to 150px
+    opacity: 0.6,             // Make the box semi-transparent
+    boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.3)", // Add a soft shadow
+    ease: "power2.inOut",     // Make animation smooth and natural
+    repeat: -1,               // Loop the animation forever
+    yoyo: true                // Reverse it back to original after each loop
+  });
+</script>
+
+
+
+----  let's see about the ease property (Similar to what we had in CSS, transition tiiming  fun)
+🧠 Why use easing?
+Without easing, animations feel robotic or mechanical. Easing makes them feel natural, realistic, and more engaging. like how Animaton will start , in middle and end too
+
+| Ease Name          | What it Does                                           |
+| ------------------ | ------------------------------------------------------ |
+| `linear`           | Constant speed from start to end                       |
+| `power1.in`        | Starts slow, ends fast                                 |
+| `power1.out`       | Starts fast, ends slow                                 |
+| `power1.inOut`     | Starts slow, speeds up in middle, slows at end         |
+| `power2.inOut`     | Like `power1.inOut` but smoother                       |
+| `power3`, `power4` | Even more dramatic versions                            |
+| `bounce.out`       | Ends with a bounce                                     |
+| `elastic.out`      | Overshoots and comes back like a rubber band           |
+| `back.out`         | Slightly pulls back then moves forward                 |
+| `expo.inOut`       | Very fast middle, slow start/end (like speeding train) |
+
+
+
+
+Also make sure to use the camelCase there too and write as String which we need
+backgroundColor: "pink",
+
+
+
+
+
+
+----- Let's see about the ScrollTrigger
+
+Well we first need to add cdn of ScrollTrigger, but there is property of css that if we have same attribute values it take last (specificity) 
+like 
+.box {
+  background: red;
+}
+
+.box {
+  background: blue;
+}
+
+
+The CDN for ScrollTrigger (order is important )
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"
+      integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"
+      integrity="sha512-P2IDYZfqSwjcSjX0BKeNhwRUH8zRPGlgcWl5n6gBLzdi4Y5/0O4zaXrtO4K9TZK6Hn1BenYpKowuCavNandERg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="script.js"></script>
+
+
+
+Well let's see one thing 
+---- HTML    <div class="Page1">
+      <div class="Box"></div>
+    </div>
+    <div class="Page2">
+      <div class="Box"></div>
+    </div>
+    <div class="Page3">
+      <div class="Box"></div>
+    </div>
+
+
+--- CSS    
+.Page1 {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(241, 206, 162);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Page2 {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(75, 189, 246);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Page3 {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(165, 244, 96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Box {
+  height: 200px;
+  width: 200px;
+  background-color: aqua;
+}
+
+(Here one can understand we are creating the 3 pages with .Page1,etc  so there will be scroll bar and .Box will be at middle)
+
+--- JS
+gsap.from(".Page1 .Box", {
+  scale: 0.9,
+  rotate: 450,
+  duration: 2,
+});
+gsap.from(".Page2 .Box", {
+  scale: 0.9,
+  rotate: 450,
+  delay: 3,
+  duration: 2,
+});
+gsap.from(".Page3 .Box", {
+  scale: 0.9,
+  rotate: 450,
+  duration: 2,
+});
+
+So if i apply the animation to each .Page all animation will get triger at once, and i'll see that only one animation is running 
+I can set the delay, but how can i know when user will Scroll ,  so that's why we use ScrollTrigger, which triggers the animation of perticular element at scroll point
+
+
+
+gsap.from(".B1", {
+  x: 500,
+  opacity: 0,
+  duration: 2,
+  scrollTrigger: {
+    trigger: ".B1",
+    scroller: "body",
+    markers: "true",
+    start: "top 60%",
+    end: "top 30%",
+    scrub: true,
+    // scrub: 2,
+  },
+});
+gsap.from(".B2", {
+  x: -500,
+  duration: 2,
+  opacity: 0,
+  scrollTrigger: {
+    trigger: ".B2",
+    scroller: "body",
+    markers: true,
+    start: "top 60%",
+    scrub: true,
+  },
+});
+
+
+
+So this how one can write scroll trigger there, 
+✔️ The target you're animating is .Page2 .Box
+✔️ The scroll trigger is also based on .Page2 .Box
+
+So yes — you must provide the trigger inside scrollTrigger to tell GSAP when to run the animation based on scroll.
+So to disccus it little
+  scrollTrigger: {
+    trigger: ".B1",   // Triggers the .B1 element
+    scroller: "body",  //scroler is added to the body
+    markers: "true",   //adds the start and end markers (om body)
+    start: "top 60%",  //adds the another marker for the element
+    end: "top 30%",   //adds end marker
+    scrub: true,
+    // scrub: 2,
+//   },
+
+We create the Object of scrollTrigger there and mention what to trigger, what is scroller,
+so in start and end area of element(mentioned with start, end element will animate)
+And with scrub we are acheiving something like yoyo, we can also set how many times we want it to
+when scroll start hit the start, hit will start animating and with scroll end it will go back to the original state of animatiopn(in scrub)

@@ -1,0 +1,159 @@
+Let's first disscuss about the Routes Usage:
+<BrowserRouter>
+        <NavBar />
+
+        <Routes>
+          <Route path="/" element={<Shop />} />
+          <Route
+            path="/Mens"
+            element={<ShopCate category="Men" banner={Men_Ban} />}
+          />
+          <Route
+            path="/Womens"
+            element={<ShopCate category="Women" banner={Women_Ban} />}
+          />
+                    <Route
+            path="/Kids"
+            element={<ShopCate category="Kid" banner={Kid_Ban} />}
+          />
+          <Route path="/Product" element={<Product />} />
+          <Route path="/Product/:ProductID" element={<Product />} />
+          <Route path="/Cart" element={<Cart />} />
+          <Route path="/Login" element={<LoginSignUp />} />
+        </Routes>
+
+        <Footer />
+      </BrowserRouter>
+
+
+firstly we wrap everything in a BrowserRouter,  even if the components we want to show in all routes,  here we are taking NavBar component for all routes, so each route will have and only that route related components will be changed
+ANd we are write all routes in a Routes ,  then for specific route we use Route,  with attributes as path and element  and as this element={<Shop />}  have component which should be expecuted we put it in a {}  and it can have props that's obvious
+
+
+
+
+
+----- well above one was the traditional way, Let's see with createBrowserRouter
+1.
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />, // this component usually has layout, nav, etc
+    children: [
+      { path: "", element: <Home /> },        // localhost:3000/
+      { path: "about", element: <About /> },  // localhost:3000/about
+    ],
+  },
+]);
+
+2.
+import { Outlet, Link } from "react-router-dom";
+
+function App() {
+  return (
+    <div>
+      <nav>
+        <Link to="/">Home</Link> | <Link to="/about">About</Link>
+      </nav>
+
+      <Outlet /> {/* This is where nested children will render */}
+    </div>
+  );
+}
+
+3.
+import ReactDOM from "react-dom/client";
+import { RouterProvider } from "react-router-dom";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <RouterProvider router={router} />
+);
+
+
+ Short Answer:
+👉 Yes, when you visit /, React renders:
+
+The App component (always)
+
+Inside App, the <Outlet /> is replaced by:
+
+<Home /> (for /)
+
+<About /> (for /about)
+
+So the App is the layout — it's always there (like nav/header/footer), and only the main content inside <Outlet /> changes based on the route.
+( So Simply what we do is that)
+
+
+
+
+
+
+
+---Well let's see about how we use images in JSX
+1. if Image is in public folder
+<img src="/Admin_Assets/nav-logo.svg" alt="Nav-Logo" />
+
+
+2. If It is not then
+import Arrow from "../assets/arrow.png";  // or wherever it's located
+
+<button>
+  Check Collection <img src={Arrow} alt="" />
+</button>
+
+
+
+---- Let's see about sending props and destruing them
+    <div>
+      <h1>Welcome</h1>
+      <UserCard name="Mahesh" age={22} hobby="Coding" />
+    </div>
+    Also by using {22} we are making sure that it is send as Number,  u know how we send the props there
+
+
+  1. Here we are destructuring props values directly
+    function UserCard({ name, age, hobby }) {
+  return (
+    <div>
+      <h2>Name: {name}</h2>
+      <p>Age: {age}</p>
+      <p>Hobby: {hobby}</p>
+    </div>
+  );
+    }
+
+  2.We have the props object which have all the values, we can destructe from it
+
+  function UserCard(props) {
+  const { name, age, hobby } = props; // destructuring inside body
+
+  return (
+    <div>
+      <h2>{name}</h2>
+      <p>{age}</p>
+      <p>{hobby}</p>
+    </div>)}
+
+
+
+
+---- Let's see about the named and default export
+Named export can be many,  but there can be only one default for each jsx file
+
+export const square = (x) => x * x;
+export const cube = (x) => x * x * x;
+
+const pi = 3.14159;
+export default pi;
+
+
+import pi, { square, cube } from "./math";
+
+console.log(pi);       // 3.14159
+console.log(square(2)); // 4
+console.log(cube(2));   // 8
+
+we wrote named export in a {} and default directly
+
+

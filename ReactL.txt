@@ -1,0 +1,457 @@
+---1. Parent ➡️ Child (P → C)
+Parent declares state or handler, send via props
+---2. Child ➡️ Parent (C → P)
+Parent gave child a “listener”
+
+const [screen, setScreen] = useState(false);
+const handleLoginData = (email, pass) => {
+  console.log("Parent got:", email, pass);
+};
+
+
+Parent passes them as props
+<Login
+  setScreen={setScreen}
+  getData={handleLoginData}
+/>
+So Here we are Sending the setter to the C to set the Screen, and sending the method getData to send back teh Email amd pass to teh P, we are sending both of them as props, getData method so it can give the Data to P, 
+here, getData={handleLoginData} getData is like variable and handleLoginData is like value
+
+
+
+
+---Child receives via destructuring
+
+const Login = ({ setScreen, getData }) => { … }
+Child uses them directly
+Call setScreen(true) to toggle views
+Call getData(email, pass) to send data back
+
+        <button
+          onClick={() => {
+            setScreen(true);
+            handleLData();
+          }}
+        >
+        When we click the button, we call the handleLData(),  we set Screen to true
+
+        then handleLData() set the values 
+          const handleLData = () => {
+    // NEData.current.value;
+    // Pass.current.value;
+    console.log(`D1: ${NEData.current.value} P1:${Pass.current.value}`);
+    getData(NEData.current.value, Pass.current.value);
+  };
+
+  here we set the values for our P method getData and send to P throught getData
+
+
+
+
+
+
+
+------ Let's see about how we take the form values uing useRef or useState
+----1. using useRef
+  // const NEData = useRef();
+  // const Pass = useRef();
+  Declared the varianle with useRef Hook which is directly controlled by DOM, that is why it is also said as uncontrolled element
+
+          <input
+          type="text "
+          name="n1"
+          placeholder="Enter Email/Phone"
+          ref={NEData}
+          we add the that useRef hook variable to the input field so it will have that input value 
+
+
+    // NEData.current.value;
+    // Pass.current.value;
+    // console.log(`D1: ${NEData.current.value} P1:${Pass.current.value}`);
+    // getData(NEData.current.value, Pass.current.value);
+    And this is how we take the values of perticular variable, then print or send it anything man
+
+
+
+
+--- using useState
+---Let's see with spearate useState for Email and PAssword
+  const [EmailVal, setEmailVal] = useState();
+  const [PasswordVal, setPasswordVal] = useState();
+  Declared 2 different
+
+
+            onChange={(e) => {
+            setPasswordVal(e.target.value);
+          }}
+  we can set the values using it;'s setter
+
+
+      console.log(`Email: ${EmailVal} & Password: ${PasswordVal}`);
+    getData(EmailVal, PasswordVal);
+    We can send the State values     
+
+
+---- Let's wrap it in single state(like as object)    
+  // const [DataWithState, setDataWithState] = useState({
+  //   Email: "",
+  //   Password: "",
+  // });
+  Intialize teh State with object with empty string
+
+          <input
+          type="text "
+          name="Email"
+          // value={DataWithState.Email}
+          placeholder="Enter Email/Phone"
+          // onChange={(e) => {
+          //   setDataWithState({
+          //     ...DataWithState,
+          //     [e.target.name]: e.target.value,
+          //   });
+          // }}
+
+          Here we use spread operator to take the prevoius values as we are just updating single entry of object at once so we take all prevoius values then 
+          e.target.value and e.target.namne which have define above also make sure give same name in a 2 places(Email Value here)
+            1.        name="Email"
+          // value={DataWithState.Email}
+            2. // const [DataWithState, setDataWithState] = useState({
+  //   Email: "",
+
+  ---When using useState, you should bind the input’s value to state:
+
+<input
+  value={email}                   // for single field
+  onChange={(e) => setEmail(e.target.value)}
+/>
+or
+
+<input
+  name="email"
+  value={formData.email}         // for object-based
+  onChange={(e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+/>
+
+
+
+
+
+
+-----------   ✅ Why It's Called “Controlled Component”
+Because the input field doesn't manage its own data.
+Instead, React controls it through state.
+
+🧠 React always knows:
+
+What’s in the input
+
+When it changes
+
+How to update it
+
+✅ Visual Flow
+
+User Types in Input
+        ↓
+ onChange triggers
+        ↓
+  State gets updated
+        ↓
+  React re-renders
+        ↓
+Input shows new value from state
+
+
+
+
+
+
+
+----------Okay Let's make some understanding  about the our project of teh Login and OTP once
+---How is the Structure of the Program 
+import React, { useState } from "react";
+import "./App.css";
+import Login from "./components/Login/Login";
+import OTP_Screen from "./components/OTP_Screen/OTP_Screen";
+
+const App = () => {
+  const [Screen, setScreen] = useState(false);
+  const getDataInP = (NE1, P1) => {
+    console.log(`Name: ${NE1} And Pass: ${P1}`);
+  };
+  return (
+    <div>
+      {/* <h1>Hello There</h1> */}
+      {!Screen ? (
+        <Login setScreen={setScreen} getData={getDataInP} />
+      ) : (
+        <OTP_Screen />
+      )}
+    </div>
+  );
+};
+
+export default App;
+
+Well we tried other things There, u know
+But this is App.jsx here we structured both components <Login> and <OTP_Screen > based on Screen State we are just rendering them ,  if Screen is true we are setting Login else OTP_Screen,  also we are sendingit's setter setScreen to the Login Component when we click its;s submit button, it will make Screen State false and render OTP_Screen, that's all 
+
+
+
+
+
+--- well let's see the Login Component
+import React, { useRef, useState } from "react";
+import Styles from "./Login.module.css";
+
+const Login = ({ setScreen, getData }) => {
+  // const NEData = useRef();
+  // const Pass = useRef();
+  // const [Data,setData]=useState();
+  // const [DataWithState, setDataWithState] = useState({
+  //   Email: "",
+  //   Password: "",
+  // });
+  const [EmailVal, setEmailVal] = useState();
+  const [PasswordVal, setPasswordVal] = useState();
+  const handleLData = () => {
+    // NEData.current.value;
+    // Pass.current.value;
+    // console.log(`D1: ${NEData.current.value} P1:${Pass.current.value}`);
+    // getData(NEData.current.value, Pass.current.value);
+    // console.log(
+    //   `Email: ${DataWithState.Email} & Password: ${DataWithState.Password}`
+    // );
+    // getData(DataWithState.Email, DataWithState.Password);
+    console.log(`Email: ${EmailVal} & Password: ${PasswordVal}`);
+    getData(EmailVal, PasswordVal);
+  };
+  return (
+    <div>
+      <div className={Styles.Container}>
+        <p>Login Form </p>
+        <input
+          type="text "
+          // name="n1"
+          name="Email"
+          // value={DataWithState.Email}
+          placeholder="Enter Email/Phone"
+          // ref={NEData}
+          // onChange={(e) => {
+          //   setDataWithState({
+          //     ...DataWithState,
+          //     [e.target.name]: e.target.value,
+          //   });
+          // }}
+          onChange={(e) => {
+            setEmailVal(e.target.value);
+          }}
+        />
+        <input
+          type="password"
+          name="Password"
+          // value={DataWithState.Password}
+          placeholder="Enter Password"
+          // ref={Pass}
+          // onChange={(e) => {
+          //   setDataWithState({
+          //     ...DataWithState,
+          //     [e.target.name]: e.target.value,
+          //   });
+          // }}
+          onChange={(e) => {
+            setPasswordVal(e.target.value);
+          }}
+        />
+        <button
+          onClick={() => {
+            setScreen(true);
+            handleLData();
+          }}
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
+
+Well it is just Login Form u know,We have Email and Password Field , we took those values with useRef or useState with single State(with storing all values in a state) or with spearate State for Email and Password
+
+
+----- Let's see about the OTP_Screen too
+import React, { useRef, useState } from "react";
+import Styles from "./OTP_Screen.module.css";
+
+const OTP_Screen = () => {
+  const [OTP, setOTP] = useState(new Array(6).fill(""));
+  const Inputs = useRef([]);
+  // const [OTP, setOTP] = useState();
+  const handleOnChange = (e, index) => {
+    // console.log(e.target.value);
+    const value = e.target.value;
+    // const DValue = /^\d?$/.test(value);
+    if (/^\d?$/.test(value)) {
+      const NewOPT = [...OTP];
+      // setOTP((NewOPT[index] = DValue));
+      NewOPT[index] = value;
+      setOTP(NewOPT);
+      // console.log("OTP: ", OTP);
+    }
+    if (value !== "" && index < 5) {
+      Inputs.current[index + 1].focus();
+    }
+  };
+  const handleKeyDown = (e, index) => {
+    // console.log("Key is: ", e.key);
+    // if (
+    //   e.key === "Backspace" &&
+    //   index > 0 &&
+    //   Inputs.current[index].value === ""
+    // ) {
+    //   Inputs.current[index - 1].focus();
+    // }
+    if (e.key === "Backspace" && index > 0 && OTP[index] === "") {
+      e.preventDefault();
+      Inputs.current[index - 1].focus();
+    }
+  };
+  const handleClick = () => {
+    console.log("OTP: ", OTP);
+  };
+  return (
+    <div>
+      {/* <h3>this is a OTP Screen</h3> */}
+      <div className={Styles.Container}>
+        <p>Enter OTP </p>
+        {/* <input type="text " name="n1" placeholder="Enter Email/Phone" /> */}
+        {/* <input type="password" name="p1" placeholder="Enter Password" /> */}
+        <div className={Styles.InputWrapper}>
+          {OTP.map((Digit, index) => {
+            return (
+              <input
+                type="text"
+                key={index}
+                value={Digit}
+                maxLength={1}
+                onChange={(e) => handleOnChange(e, index)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                ref={(IVal) => (Inputs.current[index] = IVal)}
+              />
+            );
+          })}
+        </div>
+        {/* <div className={Styles.InputWrapper}>
+          <input
+            type="text"
+            onChange={(e) => handleOnChange(e)}
+            onKeyDown={(e) => handleKeyDown(e)}
+          />
+          <input type="text" />
+          <input type="text" />
+          <input type="text" />
+          <input type="text" />
+          <input type="text" />
+        </div> */}
+
+        <button onClick={() => handleClick()}>Submit</button>
+      </div>
+    </div>
+  );
+};
+
+export default OTP_Screen;
+
+
+let's see about the CSS , wanna disscuss that one
+
+
+
+
+---Let's understand regex little
+--Example---> /^\d?$/
+--Why we use the regex we use it to validate our inputs to match it with some patterns
+Want to allow only digits? ✅
+Match email formats? ✅
+Validate mobile numbers? ✅
+
+
+--- What is /.../
+ForwardSlahesh denote the regex just like String written as "..." ,  just wrapper for that
+
+
+--- What is \d (Character classes)
+firstly why there is \,  so backwardslash escape Character,
+In regex, the backslash \ is called an escape character.
+
+🔹 It has two purposes:
+Gives special meaning to normal characters (like \d(to allow digits), \s(to allow spaces), etc.)
+Removes special meaning from special characters so you can match them literally (like \. to match a dot)
+
+
+---And  what is d there
+1. \d -> Any Digits (0-9)
+2. \D -> Anything except Digits
+3. \w ->Any words (a-zA-Z0-9_)
+4. \W -> Anything except words
+5. \s -> For Spaces (tab, space) (" ")
+6. \S -> Anything except Spaces
+
+
+---  what is ? in /^\d?$/ (Quantifiers)
+It basically tells how many char are allowed here we wanted the 0 or 1 digit only that's why
+1. ? -> 0 or 1 times (so in our Example we can have 0 or 1 digit)
+2. * -> 0 or more times 
+3. + -> 1 or more times
+4. {n} -> Exactly n times (e.g {\d4} =>
+5. {n,}	At least n times	\d{3,} → 123, 12345
+6. {n,m}	Between n and m times	\d{2,4} → 12, 123, 1234
+
+
+
+
+--- Anchors
+^	-->Start of string
+$	--->End of string
+
+
+
+
+
+--- About using value in input fields
+ 1. Controlled Input:
+React is the boss — the input value is always in React's control
+
+const [name, setName] = useState("");
+
+<input
+  type="text"
+  value={name}
+  onChange={(e) => setName(e.target.value)}
+/>
+🔍 What happens here?
+You type → onChange fires
+React state updates → UI re-renders with value={name}, make sure to Intialize with something, else it will give error that trying to use uncontrolled element as controlled element bcoz we haven't Intialize it
+React always knows what’s inside the input
+
+
+2. Uncontrolled Input (Still using useState, but not controlling it)
+
+const [name, setName] = useState("");
+
+<input
+  type="text"
+  placeholder="Enter name"
+  onBlur={(e) => setName(e.target.value)} // or onClick, or onSubmit
+/>
+🔍 What happens here?
+You type → React doesn’t care (input manages itself)
+You blur (click outside) → state is updated
+React only knows value when you ask for it
+
+
+

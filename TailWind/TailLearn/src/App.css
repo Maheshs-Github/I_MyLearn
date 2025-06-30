@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+.MyClass
+{
+  /* position: sticky;
+  top: 10px; */
+  
+}
+
+/* To Make Any div as center in the page, we use 
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 100px;
+    width: 141px;
+
+    /* Using Flex */
+    /*
+        display: flex
+;
+    align-items: center;
+    justify-content: center;
+    margin-top: 160px;
+    */
+/* with  grid
+
+  display: grid;
+  place-items: center;
+  height: 100vh; /* optional: fills screen vertically */
+
+
+*/
+
+/* .Base
+{
+  border: 2px solid black;
+}
+.Base img
+{
+  display: inline-block;
+    height: 80px;
+    margin: 43px;
+}
+.Base .Img2
+{ */
+    /* position: relative; */
+    /* top: 100px; */
+    /* position: absolute; */
+    /* top: 100px; */
+    /*position: fixed;
+    top: 100px;*/
+
+
+/* } */
+:root
+{
+  background-color: aquamarine;
+}
+.TBase
+{
+  margin: 30px;
+  
+}
+.Text
+{
+  font-size: 23px;
+    font-weight: 500;
+}
+.ImgCont h2
+{
+  font-weight: 600;
+    font-size: 15px;
+}
+.Post
+{
+  display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    /* border: 2px solid; */
+    width: 12%;
+    height: 17vh;
+    margin-top: 7px;
+    padding: 10px;
+    gap: 10px;
+    background-color: rgb(219, 216, 216);
+    border-radius: 6px;
+}
+.Post img
+{
+      width: 43px;
+}

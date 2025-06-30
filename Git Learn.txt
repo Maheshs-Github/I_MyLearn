@@ -1,0 +1,449 @@
+
+
+So as we Know Git is a version Control System and Github where we host our repos online
+Let's understand the basic flow of how we can create repo of our local folder
+
+++1. Make sure u navigate to that perticaular folder which we have to upload as repo then, like here i want to host the GitBasics3 and file inside it(Actually we host the content inside of that not the folder,  that is why our folder name and Git Repo name , can be different, it doesn't have to be same)
+PS D:\I_Learn> cd 'd:\I_Learn\GitAndGitHub\Git Basics'
+
+++2. -->git init
+Intialize the the folder u are in as Git repository and add .git hidden file which keep records of the folder related, like Changes, configuration  so git can track them
+Alos to see the hidden file we use 
+--> Get-ChildItem -force
+To get the only .git related hidden files
+--> Get-ChildItem .git -force
+
+++3. -->git status
+shows the current state of your working directory and staging area.
+It can have different status based on the State of directory
+1. Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        Git4.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+(If we have just initialize the current folder  for git then and haven't added any file it can show this status, or we have already pushed, but later created new file then too)
+2. Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   MyFile2.txt
+(If we made the Changes in alredy added,pushed or comited file,  we use git add . for that)        
+3.  Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   MyFile2.txt
+
+PS D:\I_Learn\GitAndGitHub\GitBasics3> git commit -m "Commit at 13"
+(If we havn't commit the changes)
+4.nothing to commit, working tree clean
+✅ All files are committed, nothing is staged or modified.
+
+
+++4. git add
+we use it to stage all Changes which are made to teh folder
+git add .	---> Adds everything in the current folder (recursively)
+git add index.html	---> Adds only that one file
+git add folder/	---> Adds everything inside the folder
+
+Also let's understand about gitignore file, so what is it 
+as name suggest when push our local folder to github what file are not to upload are mention in a gitignore, those file are not tracked, added or commited
+✨ Example:
+Your .gitignore file might look like this:
+node_modules/
+.env
+*.log
+
+ This tells Git to ignore:
+the node_modules/ folder
+ .env file
+*.log file
+In our Vite + React Project we mostly list node_modules in a gitignore,so they will not pushed on the github as we can install them using package.json  when we fork or clone that repo
+
+Let's understand about Stagging and how the file go throught some stages
+Rememeber some thing is then that when we add chages they goes in stagging area(Part btw add and commit)
+# Step 1: Modify any file
+# ➤ Now the file is Unstaged (Git sees change but not tracked)
+
+# Step 2: Stage the file
+git add filename
+# ➤ Moves the file to Staging Area (ready to be saved)
+
+# Step 3: Commit the change
+git commit -m "Your message"
+# ➤ Saves it permanently in your local Git history
+
+# Step 4: Push to GitHub
+git push origin branch-name
+# ➤ Uploads the commit to GitHub
+
+
+++5. # git commit -m "Your message"
+# ➤ Saves all staged changes permanently in your local Git history
+# ➤ Every commit creates a unique ID (hash) and message for tracking
+🧠 Short Summary:
+
+git commit = "Take a snapshot of staged changes and save it locally in Git."
+
+
+++6. git push origin main
+to push the commited part of git on the GitHub
+also u r default branch is master so u could write it as git push origin master
+or if u want to rename the branch just do it before very First commit, well u can do it at anytime too
+
+also origin is refer to teh our github repo url,(it says go there and push the commited code)
+ What does origin mean?
+origin is just the default name for your remote GitHub repository.
+
+You set it when you do:
+git remote add origin https://github.com/maheshmane/YourRepo.git
+So:
+
+git push origin main
+Means:
+➡️ Push the main branch to the remote repo named origin.
+To Rename the branch we use (master to main)
+git branch -m main
+
+
+
+-------------- basic flow to Make folder to host it on Github ----------------
+# 1. Create and open project folder
+mkdir MyProject
+cd MyProject
+code .   # Opens in VS Code
+
+# 2. Initialize Git
+git init
+
+# 3. (Optional) Rename branch to main
+git branch -m main
+
+# 4. Create files (index.html, style.css, etc.)
+
+# 5. Check Git status
+git status
+
+# 6. Add all files to staging
+git add .
+
+# 7. Commit the changes
+git commit -m "Initial commit"
+
+# 8. Create a repo on GitHub (no README, no .gitignore)
+
+# 9. Connect local to remote GitHub repo
+git remote add origin https://github.com/yourusername/MyProject.git
+
+# 10. Push to GitHub (set upstream for future pushes)
+git push -u origin main
+
+
+
+
+
+
+
+------   Git Branches – Full Workflow with Understanding Comments  -----------# 
+📁 Create and open a new project folder
+mkdir GBranch
+cd GBranch
+code .               # Open in VS Code
+
+# 🟢 Initialize Git and rename branch to main
+git init
+git branch -m main
+
+# 📝 Create a file and make first commit on main
+echo "This is Main Branch File" > Main.txt
+git add .
+git commit -m "Initial commit from main"
+
+# 🌐 Connect to GitHub and push main branch
+git remote add origin https://github.com/yourusername/GBranch.git
+git push -u origin main
+
+
+---- Create New Branches and Work Independently
+# 🚀 Create and switch to a new branch
+git checkout -b feature
+
+# 📝 Add a new file on feature branch
+echo "This is Feature Branch File" > Feature.txt
+git add .
+git commit -m "Add feature branch file"
+git push -u origin feature    # Push to GitHub
+
+# 🧪 Similarly create other branches
+git checkout -b experiment
+echo "Experiment branch file" > Experiment.txt
+git add .
+git commit -m "Add experiment branch file"
+git push -u origin experiment
+
+# 🆕 Create 'newone' branch
+git checkout -b newone
+echo "This is new one" > NewOne.txt
+git add .
+git commit -m "NewOne file from newone branch"
+git push -u origin newone
+
+
+----- Switching Branches & Git Warnings
+# 🟡 If file is changed but not committed, Git prevents switching
+# You'll get: "Your local changes would be overwritten"
+
+# ✅ To fix this, either:
+git add .
+git commit -m "Saving changes before switching"
+
+# OR temporarily stash the changes:
+git stash
+
+# 🔄 Then switch safely
+git checkout main
+
+
+
+----    Deleting Branches
+# 🧨 Delete local branch
+git branch -d feature
+
+# 🔥 Delete remote branch from GitHub
+git push origin --delete feature
+
+
+
+
+
+
+
+--------------------------  ✅ 1. What Is Merge?  --------- ----------------------
+Merging is simply combining the changes from one branch into another.
+
+🧠 You usually merge into main from branches like feature, bugfix, etc.
+
+Important Merge Commands
+| Command                     | What It Does                            |
+| --------------------------- | --------------------------------------- |
+| `git merge <branch>`        | Merge the given branch into current one |
+| `git log --oneline --graph` | Shows merge history with branches       |
+| `git status`                | See if there are conflicts              |
+| `git diff`                  | See what changed before and after merge |
+| `git merge --abort`         | Cancel the merge if things get messy    |
+
+let's see we try to push new code from else where from any location in outr file System
+make sure to clone or fork the repo, then u can add new chnages and sent PR request , u don't even have add remote url or anything, as it already know about it
+also it is good practice to create diff branch when we do okay?
+Also we can check the conflicts with our GitHub and erase what we don't need
+Alos we can use git diff to check Merging related things, to come out of it , one can use q 
+
+
+
+
+
+
+
+---------------------------- Pull Request ---------------------------
+🔄 Why is it called a Pull Request?
+Even though you are pushing your code, you’re not merging it yourself — you are asking someone else (or GitHub) to:
+
+👉 "Please pull my changes into your branch."
+
+So it's called a pull request because:
+
+🔹 You’re requesting the maintainer (or GitHub itself) to
+🔹 Pull your branch/changes into their base branch (often main)
+
+
+------- Just Flow
+✅ Full Pull Request Flow (Terminal → GitHub)
+📁 Suppose you’re in a Git repo already (cloned or newly created):
+
+# Step 1: Create a new branch to work safely
+git checkout -b feature1      # Creates and switches to 'feature1' branch
+
+# Step 2: Make some changes in your files (like adding/editing .txt, .js, etc.)
+
+# Step 3: Check status to see changes
+git status
+
+# Step 4: Add those changes to staging
+git add .
+
+# Step 5: Commit the changes
+git commit -m "Added new feature in feature1"
+
+# Step 6: Push your branch to GitHub
+git push origin feature1      # Pushes 'feature1' to GitHub
+
+
+🌐 Now go to GitHub:
+Open your repo on GitHub
+
+GitHub will show a message:
+
+"feature1 had recent pushes... Compare & pull request"
+Click on “Compare & pull request”
+
+Review changes → Add message if needed → Click “Create pull request”
+
+You can now Merge it into main if everything looks good!
+
+💡 What Did You Just Do?
+You pushed your changes to a separate branch (feature1)
+You asked GitHub/main to PULL your changes
+Hence → It’s called a “Pull Request”
+
+
+
+
+
+
+
+
+-----------------  Pull request -------------
+✅ What is git pull origin main used for?
+git pull origin main
+means:
+
+🔄 “Get the latest changes from the main branch on GitHub (origin) and merge them into your current local branch.”
+
+📌 Use It When:
+You’re working in a team 👨‍💻👩‍💻
+→ You want to update your local branch with the latest changes your teammate pushed.
+
+You merged a pull request on GitHub, but your local repo is behind
+→ Use git pull origin main to bring those changes locally.
+
+You switch machines or folders
+→ Pull keeps your code up-to-date across environments.
+
+
+
+
+
+# ---------------------------------------------
+# Step 1: A Project Maintainer creates Main Repo
+# ---------------------------------------------
+
+# This is done on the MAIN account (e.g., Maheshs-Git)
+# Let's say: https://github.com/Maheshs-Git/Repo_3
+# This is the official MAIN repository.
+
+# It has a default branch: main
+# Maintainer may add few files to start with.
+
+# ---------------------------------------------
+# Step 2: You fork that repo to your account
+# ---------------------------------------------
+
+# On GitHub UI → Click on "Fork" → Now it's copied to your account (e.g., Maheshs-Github)
+# URL becomes: https://github.com/Maheshs-Github/Repo_3
+
+# ---------------------------------------------
+# Step 3: Clone your FORKED Repo to your machine
+# ---------------------------------------------
+
+git clone https://github.com/Maheshs-Github/Repo_3.git
+cd Repo_3
+
+# You don't need to set `origin` manually — it's already set to your forked repo
+
+# ---------------------------------------------
+# Step 4: Create a new branch for your changes
+# ---------------------------------------------
+
+git checkout -b newbranch
+# 🔁 Never push to main directly from fork — always work on a feature branch
+
+# ---------------------------------------------
+# Step 5: Make changes or create new files
+# ---------------------------------------------
+
+# Example: create File3.txt, File4.txt, etc.
+
+git add .
+git commit -m "Added File3 and File4"
+
+# ---------------------------------------------
+# Step 6: Push your branch to your forked GitHub
+# ---------------------------------------------
+
+git push origin newbranch
+# ⬆ This will push your branch to your forked repo (Maheshs-Github/Repo_3)
+
+# ---------------------------------------------
+# Step 7: Create a Pull Request (PR)
+# ---------------------------------------------
+
+# Go to GitHub → Your forked repo → It'll suggest:
+# 👉 "Compare & Pull Request"
+
+# Or visit: https://github.com/Maheshs-Git/Repo_3/pulls
+# and choose: 
+# - Base repo: Maheshs-Git/Repo_3
+# - Base branch: main
+# - Head repo: Maheshs-Github/Repo_3
+# - Compare: newbranch
+
+# Submit PR → Maintainer reviews → Merges it
+
+# ---------------------------------------------
+# ⚠ If you push more commits to same branch → PR gets updated automatically
+# ---------------------------------------------
+
+# ---------------------------------------------
+# 🔁 If MAIN repo adds new changes
+# You want them in your fork and local clone
+# ---------------------------------------------
+
+# First, add MAIN repo as upstream:
+git remote add upstream https://github.com/Maheshs-Git/Repo_3.git
+
+# Fetch upstream changes
+git fetch upstream
+
+# Merge them to your local main
+git checkout main
+git merge upstream/main
+
+# Now push them to your forked GitHub repo
+git push origin main
+
+
+
+
+--------- Some Understanding ----------
+✅ Understanding upstream
+upstream = the original main repo you forked from (e.g., Maheshs-Git/Repo_3)
+
+You use git merge upstream/main to bring changes from the main branch of the upstream repo into your local forked repo’s main branch
+
+🔄 Flow:
+bash
+Copy
+Edit
+git fetch upstream           # Gets latest changes from original repo
+git checkout main            # Switch to your local main branch
+git merge upstream/main      # Merge those upstream changes into your local main
+git push origin main         # Optional: push to your GitHub fork
+
+
+
+
+# 🔄 Sync Complete
+
+# ---------------------------------------------
+# 🧠 Notes & Observations
+# ---------------------------------------------
+
+# ✔ PR = Pull Request → You’re asking maintainer to “pull” your code into their repo
+# ✔ If PR is merged → Changes go to MAIN repo
+# ✔ Forked repo doesn't get auto-updated → You must fetch & merge from upstream
+# ✔ Cloning your fork keeps `origin` as your fork URL
+# ✔ If you create a file with same name & don't commit → PR won't show it
+# ✔ If PR is closed (not merged) → Create new branch or push new commits to same branch
+# ✔ Can create multiple PRs from multiple branches from same fork
+
+# 🆘 Troubleshooting:
+# - PR shows nothing? → Maybe no new commits
+# - Conflicts? → Pull main first → Resolve → Commit → Push again
+# - Want latest main in your feature? → git merge main (after pulling)

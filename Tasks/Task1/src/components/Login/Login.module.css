@@ -1,0 +1,53 @@
+.Container
+{
+  border: 2px solid black;
+    width: 25%;
+    margin: 30px auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 25px;
+    padding: 25px;
+    height: 230px;
+}
+.Container p
+{
+  margin: 0;
+      font-size: 25px;
+    font-weight: 800;
+}
+.Container input
+{
+  width: 80%;
+    padding: 6px;
+    /* border: 2px soild black; */
+    border-radius: 5px;
+    font-size: 15px;
+}
+.Container button
+{
+  width: 38%;
+    height: 30px;
+    font-size: 17px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.Container .P1
+{
+font-size: 12px;
+    margin: 0;
+    position: absolute;
+    left: 40%;
+    color: red;
+    top: 145px;
+}
+.Container .P2
+{
+font-size: 12px;
+    margin: 0;
+    position: absolute;
+    left: 40%;
+    color: red;
+    top: 260px;
+}

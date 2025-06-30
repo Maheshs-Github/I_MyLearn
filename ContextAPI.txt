@@ -1,0 +1,241 @@
+--- export const PostListContext = createContext(
+  {
+    PostList: [],
+    addPost: () => {},
+    deletePost: () => {},
+  });
+ So this our Context which is just an object sends the data, just understand that it is just creating the context
+
+
+
+
+
+
+
+
+  const postReducer = (currentPostList, action) => {
+  let PostData = currentPostList;
+  if (action.type === "DELETE_POST") {
+    PostData = currentPostList.filter((DPost) => {
+      console.log(`Dpost ID: ${DPost.ID}`);
+      return !(DPost.ID === action.payload.PostID);
+    });
+  } else if (action.type === "ADD_POST") {
+    PostData = [
+      ...currentPostList,
+      {
+        ID: action.payload.PostID,
+        Title: action.payload.Title,
+        Body: action.payload.Description,
+        Reactions: action.payload.NReact,
+        UserId: action.payload.UserID,
+        Tags: action.payload.TagArray,
+      },
+      // action.payload,
+    ];
+  }
+  return PostData;
+};
+
+
+
+
+
+
+
+----- const PostListContextProvier = ({ children }) => {
+  // const [PostList, dispatchPostList] = useReducer(postReducer, []);
+  // let's try to set default values in place of []
+  const [PostList, dispatchPostList] = useReducer(postReducer, []);
+
+  console.log("PostList= ", PostList);
+  // here [] represent the empty initial value of the PostList
+
+  const addPost = (Title, Description, UserID, TagArray, NReact, PostID) => {
+    const AddPostAction = {
+      type: "ADD_POST",
+      payload: {
+        PostID,
+        Title,
+        Description,
+        UserID,
+        TagArray,
+        NReact,
+      },
+    };
+    dispatchPostList(AddPostAction);
+  };
+
+  const deletePost = (PostID) => {
+    console.log(`Item ${PostID} Deleted Successfully`);
+    const DeletePostAction = {
+      type: "DELETE_POST",
+      payload: {
+        PostID,
+      },
+    };
+    dispatchPostList(DeletePostAction);
+  };
+
+  return (
+    <PostListContext.Provider
+      value={{
+        PostList,
+        addPost,
+        deletePost,
+      }}
+    >
+      {children}
+    </PostListContext.Provider>
+  );
+};
+
+export default PostListContextProvier;
+
+important thing that holds actual values and what action should be performed
+PostListContextProvier  is just a wrapper, we use in App(we wrap whole content with PostListContextProvier in App.jsx) to make avaliable our PostList latest State, diff methods such as addPost,etc
+  const [PostList, dispatchPostList] = useReducer(postReducer, []);
+  is a similar to the useState(like it have object which stores the state and method to set state) but if i have perform multiple opeartions on the State(i mean that object we use) useReducer
+  postReducer is the function that decides how to update the state.
+  [] is the initial empty list of posts.
+
+    const addPost = (Title, Description, UserID, TagArray, NReact, PostID) => {
+    const AddPostAction = {
+      type: "ADD_POST",
+      payload: {
+        PostID,
+        Title,
+        Description,
+        UserID,
+        TagArray,
+        NReact,
+      },
+    };
+    dispatchPostList(AddPostAction);
+  };
+
+  So basically this is just a having the values from our function call (like we call the addPost() withform values then here in wrapper we are taking those values then setting type and payload with values)   then dispatching that one from our reducer function
+
+  Same for delete one too
+
+
+  return (
+    <PostListContext.Provider
+      value={{
+        PostList,
+        addPost,
+        deletePost,
+      }}
+    >
+      {children}
+    </PostListContext.Provider>
+  );
+
+
+  well here our wrapper PostListContextProvier is returning the our actual content,  let's first understand
+  what is doing in a PostListContext.Provider  we are giving the values that we need send gloablly also,  why used children there it is bcoz PostListContextProvier is wrapper it have other component in it to render them 
+  we use children there 
+
+
+
+
+
+
+
+------<PostListContextProvier>
+      {/* // <> */}
+      <div className="Main-Container">
+        {/* SideBar Componenet */}
+        <SideBar
+          SelectedTab={SelectedTab}
+          setSelectedTab={setSelectedTab}
+        ></SideBar>
+
+        <div className="Container-2">
+          {/* Header Componenet */}
+          <Header></Header>
+          {/* <Head></Head> */}
+          {SelectedTab === "Home" ? (
+            <PostListItems></PostListItems>
+          ) : (
+            <CreatePost></CreatePost>
+          )}
+
+          {/* Form Componenet */}
+          {/* <CreatePost></CreatePost> */}
+
+          {/* PostList Componenet */}
+          {/* // <PostList></PostList> */}
+
+          {/* Header Componenet */}
+          <Footer></Footer>
+        </div>
+      </div>
+      {/* // </> */}
+    </PostListContextProvier>
+
+
+    nthg just see that wrapper ,  how we wrap all the content in it
+
+
+
+
+
+
+
+
+
+  ---- const { PostList } = useContext(PostListContext);
+
+  const { addPost } = useContext(PostListContext);
+    addPost(Title, Description, UserID, TagArray, NReact, PostID);
+
+  const { deletePost } = useContext(PostListContext);
+          <span
+            className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+            onClick={() => {
+              deletePost(Post.ID);
+            }}
+          >
+    
+  SO this is how we are are using the Object , methods etc
+
+
+
+
+---- const postReducer = (currentPostList, action) => {
+  let PostData = currentPostList;
+  if (action.type === "DELETE_POST") {
+    PostData = currentPostList.filter((DPost) => {
+      console.log(`Dpost ID: ${DPost.ID}`);
+      return !(DPost.ID === action.payload.PostID);
+    });
+  } else if (action.type === "ADD_POST") {
+    PostData = [
+      ...currentPostList,
+      {
+        ID: action.payload.PostID,
+        Title: action.payload.Title,
+        Body: action.payload.Description,
+        Reactions: action.payload.NReact,
+        UserId: action.payload.UserID,
+        Tags: action.payload.TagArray,
+      },
+      // action.payload,
+    ];
+  }
+  return PostData;
+};
+
+u know just go and understand if u don't understand
+
+
+
+
+----- Alos about the export
+// const ContextM = createContext(null);
+// export default ContextM;
+if u are doing default export,  make sure declare and intialize first then only export
+
+export const ContextM=createContext(null);
+for named u can directly go like

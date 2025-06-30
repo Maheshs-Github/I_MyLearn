@@ -1,0 +1,107 @@
+/* .Div1
+{
+  height: 100px;
+  width: 100px;
+  border: 2px solid black; */
+  /* background-color: aqua; */
+  /* transition: all 5s ease-out 1s; */
+  /* transition: height 5s ease-out , background-color 5s ease-out; */
+  /* transition: height 10s ease-in-out; */
+/* } */
+/* .Div1:hover
+{
+  height: 200px; */
+  /* width: 200px; */
+  /* position: fixed; */
+  /* top: 10px;
+  right: 10px; */
+  /* background-color: rgb(245, 165, 52);
+} */
+/* .Div1:active
+{
+  height: 200px;
+  background-color: blueviolet;
+} */
+
+/* .Div1
+{
+  height: 100px;
+  width: 100px;
+  border: 2px solid black;
+  background-color: burlywood; */
+  /* transition: transform 2s ease-in 1s; */
+  /* transition: box-shadow 2s ease-out; */
+  /* opacity: 1;
+  transition: opacity 2s ease-out; */
+  /* border-radius: 2px;
+    transition: border-radius 2s ease-out;
+}
+.Div1:hover
+{ */
+  /* transform: translateY(100px); */
+   /* transform: translateY(100px) scale(1.5); */
+   /* transform: translate(100px,103px); */
+   /* transform: translateX(-10px); */
+  /* transform: scaleY(0.5); */
+  /* transform: rotate(-10deg); */
+  /* transform: skew(-10deg); */
+  /* box-shadow: 4px 4px 10px 10px rgb(117, 201, 240); */
+  /* opacity: 0.5; */
+  /* border-radius: 20px;
+
+}
+.Div1:hover
+{ */
+  /* transform: scale(1.5); */
+/* } */
+/* 
+@keyframes Anima1
+{ */
+  /* from{  background-color: burlywood;}
+  to{  background-color: red; */
+  /* 0%{ */
+    /* background-color: black; transform: translate(100px,100px);
+}
+  25%{
+    background-color: red; transform: translate(200px,200px)
+}
+  50%{
+    background-color: blue; transform: translate(400px,400px)
+}
+  75%{
+    background-color: green;transform: translate(800px,800px)
+}
+  100%{
+    background-color: white; transform: translate(100px,100px)
+}
+} */
+/* .Div1
+{
+  height: 100px;
+  width: 100px;
+  border: 2px solid black; */
+  /* background-color: burlywood; */
+  /* animation: Anima1 5s ease-in-out 0.5s 1 reverse forwards ;
+}
+.Div2
+{
+  height: 100px;
+  width: 100px;
+  border: 2px solid black;
+  background-color: rgb(97, 173, 239);
+} */
+
+
+.Div1
+{
+  height: 200px;
+  width: 200px;
+  border: 2px solid black;
+  background-color: aqua;
+  margin: 100px;
+  transition: transform 2s ease-in-out;
+}
+.Div1:hover
+{
+  transform:  translate(100px,100px) translate(0px,0px);
+}

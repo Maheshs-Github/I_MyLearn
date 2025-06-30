@@ -1,0 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: aliceblue;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+}
+
+.Page1 {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(241, 206, 162);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* .Page2 {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(75, 189, 246);
+  display: flex;
+  align-items: center;
+  justify-content: center; */
+/* } */
+.Page2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  flex-direction: column;
+  background-color: rgb(75, 189, 246);
+  height: 100%;
+  width: 100%;
+  /* overflow-x: scroll; */
+}
+.Page2 h1 {
+  font-size: 30vw;
+  overflow: hidden;
+}
+.B1,
+.B2 {
+  font-size: 40px;
+}
+.Page3 {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(165, 244, 96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Box {
+  height: 200px;
+  width: 200px;
+  background-color: aqua;
+}
+
+.page2 {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: #caf0f8;
+  padding: 50px;
+  overflow: hidden;
+}
+
+.scroll-word-wrapper {
+  width: 100vw; /* Or fixed if needed */
+  overflow: hidden;
+}
+
+.scroll-word {
+  white-space: nowrap;
+  font-size: 10vw;
+  color: #333;
+  display: inline-block;
+  transform: translateX(100%);
+}

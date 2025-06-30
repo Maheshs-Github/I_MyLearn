@@ -1,0 +1,261 @@
+---- import { createSlice, nanoid } from "@reduxjs/toolkit";
+
+const initialState = {
+  todos: [{ id: 1, text: "Hello There" }],
+};
+export const todoSlice = createSlice({
+  name: "Todo",
+  initialState,
+  reducers: {
+    addTodo: (state, action) => {
+      const Todo = {
+        id: nanoid(),
+        text: action.payload,
+      };
+      state.todos.push(Todo);
+    },
+    removeTodo: (state, action) => {
+      state.todos = state.todos.filter((T1) => {
+        return T1.id !== action.payload;
+      });
+    },
+  },
+});
+
+export const { addTodo, removeTodo } = todoSlice.actions;
+export default todoSlice.reducer;
+
+
+const initialState = {
+  todos: [{ id: 1, text: "Hello There" }],
+};
+With this we are setting up the data, it's initial state,  here we gave the object, which have the todos in it which is a array of object so we can set the multiple properties like setting the other value,
+const initialState = {
+  todos: [...],
+  isLoading: false,
+  error: null
+}
+
+ else we could a write it , directly without using the todos too
+Also accessing it gets easier like 
+const todos = useSelector((state) => state.Todo.todos);
+
+
+export const todoSlice = createSlice({
+  Creates an object called todoSlice
+In Redux Toolkit, a slice is just a piece of your global state + the logic to manage it.
+
+🧠 Think of a slice as:
+One state object (like todos)
+Plus all the actions (like addTodo, removeTodo)
+Wrapped together neatly in one file
+
+
+name: "Todo",
+name is used for debugging mostly for the 
+when we dispatch action we it is used there, { type: "Todo/addTodo", payload: "Mahesh" }
+u know with this  export const { addTodo, removeTodo } = todoSlice.actions;
+
+
+  reducers: {
+    addTodo: (state, action) => {
+      const Todo = {
+        id: nanoid(),
+        text: action.payload,
+      };
+      state.todos.push(Todo);
+    },
+    removeTodo: (state, action) => {
+      state.todos = state.todos.filter((T1) => {
+        return T1.id !== action.payload;
+      });
+    },
+  },
+  reducers basically used as methods, it will give the state & action for different methods or calls 
+  here we can directly push values to the array, do not need to do like the Context spread and all
+   just state.todos, assign values
+   Also 
+  -- A reducer in Redux is a pure function that:
+Takes current state
+Takes an action
+Returns new state based on the action
+
+
+
+
+  export const { addTodo, removeTodo } = todoSlice.actions;
+You're exporting those auto-generated action type, so that in your component you can do:
+
+
+import { addTodo } from "../features/ToDo/todoSlice";
+dispatch(addTodo("Learn Redux"));
+That sends the action:
+
+when we dispatch that it only sendss the type of action to perform and payload,  it do not call actual reducer method they way we directly used to call in a Context
+{ type: "Todo/addTodo", payload: "Learn Redux" }
+
+
+
+export default todoSlice.reducer;
+And this is exporting the reducers whole logic u know thet reducers: part,  we don't need whole slice just the reducers part , not name or anything else
+then is store we are importing as 
+import todoReducer from "../features/ToDo/todoSlice";
+so from that slice we will only import the reducer , aslo we named it as todoReducer,  we can give as we are set the reducer as default there
+
+
+
+
+---import { configureStore } from "@reduxjs/toolkit";
+import todoReducer from "../features/ToDo/todoSlice";
+export const store = configureStore({
+  reducer: {
+    Todo: todoReducer
+  },
+});
+just configure the store and set the reducer from our slice as Todo, 
+we can set more reducers there
+So our global state will something like (i mean we will access state as )
+{
+  Todo: {
+    todos: [
+      { id: 1, text: "Hello There" },
+      ...
+    ]
+  }
+}
+will access as below
+const Todos = useSelector((state) => state.Todo.todos);
+
+
+
+
+
+----import { store } from "./app/store.js";
+import { Provider } from "react-redux";
+
+createRoot(document.getElementById("root")).render(
+  <StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </StrictMode>
+);
+
+And with Provider we are taking the store(i mean itr's staet, reducers etc) , that we just configure, so it is now globally avaliabel, just Context there we used to give value to some component then export it directly
+
+
+
+
+
+-----import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { removeTodo } from "../features/ToDo/todoSlice";
+
+const Todos = () => {
+  const Todos = useSelector((state) => state.Todo.todos);
+  const Dispatch = useDispatch();
+  return (
+    <div>
+      <div className="Output">
+        {Todos.map((Data) => {
+          return (
+            <div className="Ans" key={Data.id}>
+              <h2>
+                TODO: {Data.text} <br></br>
+              </h2>
+              <button
+                className="B2"
+                onClick={() => Dispatch(removeTodo(Data.id))}
+              >
+                Delete
+              </button>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default Todos;
+
+So here we are displaying the ToDo Items,  so the to read the global state we use the useSelector hook and then take the state diplay it as we want need to
+  const Todos = useSelector((state) => state.Todo.todos);
+  const Dispatch = useDispatch();
+  return (
+    <div>
+      <div className="Output">
+        {Todos.map((Data) => {
+          return (
+                        <div className="Ans" key={Data.id}>
+              <h2>
+                TODO: {Data.text} <br></br>
+              </h2>
+              <button
+                className="B2"
+                onClick={() => Dispatch(removeTodo(Data.id))}
+              >
+
+Here we just the take the slice Todo and the todos inside it and stored Todos variable then ,  using map took all those        
+
+
+
+
+----  import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import "../App.css";
+import { addTodo } from "../features/ToDo/todoSlice";
+
+const AddTodo = () => {
+  const [Show, setShow] = useState(false);
+  const [ShowAdd, setShowAdd] = useState(false);
+  const Todo = useRef();
+  const Dispatch = useDispatch();
+  const getData = () => {
+    const ToDoValue = Todo.current.value;
+    Dispatch(addTodo(ToDoValue));
+    Todo.current.value = "";
+  };
+  return (
+    <div className="Base">
+      {/* <h1>Hello There</h1> */}
+      <button
+        className="B1"
+        onClick={() => {
+          // console.log("button Clicked 1");
+          setShowAdd(true);
+        }}
+      >
+        Add
+      </button>
+      <button
+        className="B2"
+        onClick={() => {
+          setShow(true);
+        }}
+      >
+        Show Data
+      </button>
+
+      {ShowAdd && (
+        <div className="FormBase">
+          <input type="text" ref={Todo} />
+          {/* <input type="text" ref={TDesc} /> */}
+          <button
+            className="B1"
+            onClick={() => {
+              setShowAdd(false);
+              getData();
+            }}
+          >
+            Now Add
+          </button>
+        </div>
+      )}
+      {Show && <ShowData />}
+    </div>
+  );
+};
+
+export default AddTodo;    So here in a Componenet we are   taking import { addTodo } from "../features/ToDo/todoSlice";   to take the type ,  what action to dispatch  ,  used the useDispatch to get Dispatch  object to send the that action woth payload like     Dispatch(addTodo(ToDoValue));
+ 

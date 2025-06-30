@@ -1,0 +1,57 @@
+.Base
+{
+  margin: 20px auto;
+    width: 18px;
+    display: flex;
+    justify-content: center;
+    gap: 33px;
+}
+button
+{
+  height: 44px;
+    width: 62px;
+    font-size: 17px;
+}
+.B1
+{
+  background-color: green;
+}
+
+.B2
+{
+  background-color: red;
+}
+.FormBase
+{
+  border: 2px solid black;
+  position: fixed;
+    width: 33vw;
+    z-index: 1;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: aqua;
+}
+.FormBase input ,.FormBase button
+{
+  width: 60%;
+    border: 2px solid;
+    padding: 2%;
+    border-radius: 5px;
+    margin: 30px;
+    cursor: pointer;
+
+}
+.Output
+{
+      position: fixed;
+    top: 380px;
+    width: 30vw;
+    margin: 40px auto;
+}
+.Ans
+{
+  display: flex;
+}

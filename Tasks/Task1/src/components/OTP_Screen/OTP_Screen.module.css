@@ -1,0 +1,41 @@
+.Container
+{
+  border: 2px solid black;
+    width: 25%;
+    margin: 30px auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 25px;
+    padding: 25px;
+    height: 230px;
+}
+.Container p
+{
+  margin: 0;
+      font-size: 25px;
+    font-weight: 800;
+}
+.Container button
+{
+  width: 38%;
+    height: 30px;
+    font-size: 17px;
+    border-radius: 4px;
+    cursor: pointer;
+
+}
+.Container .InputWrapper
+{
+  display: flex;
+  justify-content: center;
+    width: 80%;
+    gap: 5px;
+
+}
+.InputWrapper input
+{
+  width: 26px;
+    height: 35px;
+}

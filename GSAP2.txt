@@ -1,0 +1,688 @@
+Well first let's understand something, Well we were trying to create the page which will have the h1 in it and which will be greater in size, So we could horizontally scroll it and even we add something in h1 it will be added horizontally or even we added the new h1
+
+--- HTML 
+    <div class="Page2">
+      <h1>Experience Experience1</h1>
+    </div>
+
+--- CSS
+.Page2 {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(75, 189, 246);
+  overflow-x: auto; /* Enable horizontal scrolling */
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.Page2 h1 {
+  font-size: 30vw; /* Very large responsive text size */
+  padding: 0 20px; /* Add some padding so text isn't flush against edges */
+  display: inline-block; /* Needed for proper horizontal scrolling */
+  line-height: 1; /* Tight line height for huge text */
+}
+
+--- Let's make the understanding, height and width 100vh/vw will create whole page as one
+  --overflow-x: auto; 
+  to set the horizontal scrollbar
+  --white-space: nowrap; 
+  /* Prevent text from wrapping , actually nowrap seem like don't wrap, but it is used for wrapping tho and wrap is not to wrap
+  Kinda confused, but we don't wanted to the any h1 on new line so we used nowrap there
+  -- padding: 0 20px;
+  just for left & right padding
+  -- display: inline-block;
+  well u know why we use it , but if we wish to element to take only space which it need and can take given height and width (but we have flex here and wrap that might we don't need it)
+  -- line-height: 1;
+  it is used to set the sapce btw 2 lines, with 1 we are telling not to adding any extra space below
+
+
+
+  --Let's see how we can add the Vertical scrollbar
+
+ - HTML
+     <div class="Page2">
+      <h1>Experience Experience1</h1>
+      <h1>Experience Experience1</h1>
+      <h1>Experience Experience1</h1>
+      <h1>Experience Experience1</h1>
+      <h1>Experience Experience1</h1>
+      <h1>Experience Experience1</h1>
+      <h1>Experience Experience1</h1>
+      <h1>Experience Experience1</h1>
+      <h1>Experience Experience1</h1>
+    </div>
+
+  -CSS
+  .Page2 {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(75, 189, 246);
+  overflow-y: auto;
+}
+
+.Page2 h1 {
+  font-size: 30vw; /* Very large responsive text size */
+  padding: 0 20px; 
+}
+
+well here simply what we did is that , we added multiple multiple h1 and overflow-y added the Vertical scrollbar and h1 was block element, thta's all
+
+
+
+
+--- Let's see some other thing here too,
+let's create web page which will have 2 pages each one, which will create the 100vh/vw page so we will get 2 pages we check with scrollbar , i also added the horizontal scrollbar in first page
+--- HTML
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Learning</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="Page2">
+      <h1>Experience Experience1</h1>
+    </div>
+    <div class="Page3">
+      <h1>Experience Experience1</h1>
+    </div>
+  </body>
+</html>
+
+--- CSS
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.Page2 {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(75, 189, 246);
+  overflow-x: auto; /* Enable horizontal scrolling */
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.Page2 h1 {
+  font-size: 30vw; /* Very large responsive text size */
+  padding: 0 20px; /* Add some padding so text isn't flush against edges */
+  display: inline-block; /* Needed for proper horizontal scrolling */
+  line-height: 1; /* Tight line height for huge text */
+}
+.Page3 {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(232, 242, 96);
+}
+
+Note: something that to set the whole page as one we set the 
+  height: 100vh;
+  width: 100vw;
+
+
+
+
+
+--- let's see how can we get the text scrolling effect with CSS
+
+-CSS
+.Page2 h1 {
+  font-size: 30vw; /* Very large responsive text size */
+  padding: 0 20px; /* Add some padding so text isn't flush against edges */
+  display: inline-block; /* Needed for proper horizontal scrolling */
+  line-height: 1; /* Tight line height for huge text */
+  transition: transform 3s ease-in;
+}
+.Page2 h1:hover {
+  transform: translateX(-4500px);
+}
+
+1. transform only affects that one element
+When you hover on a specific <h1>, only that h1 is affected.
+It moves itself, not the .Page2 or body.
+
+2. translateX(-4500px)
+It means move the element 4500px left from its original place.
+So the text slides out of view to the left.
+
+3. Why it “scrolls” the text
+It looks like scrolling, but it's not actual scroll.
+It's just the <h1> sliding away from its position (with animation).
+
+
+
+---with JS
+gsap.to(".Page2 h1", {
+  x: -4500,
+  duration: 5,
+  delay: 0.4,
+  scrollTrigger: {
+    // trigger: ".Page2 h1",
+    trigger: ".Page2 ",
+    scroller: "body",
+    markers: true,
+    // start: "top 40%",
+    // end: "top 10%",
+    start: "top 0%",
+    end: "top -130%",
+    pin: true,
+    scrub: 2,
+  },
+});
+
+So now we are trying to acheive the that effect with GSAP, 
+  x: -4500,
+   translate to -4500 on X axis (it slides the h1 to the left)
+
+  duration: 5,
+  delay: 0.4,   
+  by setting teh duration, we are giving the time for smooth scroll
+  both delay and duration works
+
+    scrollTrigger: {
+    // trigger: ".Page2 h1",
+    scroller: "body",
+    markers: true,
+    Well adding the trigger, markers(actually if we don't set the markers=true, it will not show any markers there),scroller
+
+        // start: "top 40%",
+    // end: "top 10%",
+    start: "top 0%",
+    end: "top -130%",
+    when we set the markers, it set the marker for the that perticular element and also for the page (start and end position)
+    with start we can set the markers for page scroll points or elements
+
+  start:"top 40%"
+→ Start the animation when the top of the target element reaches 40% down from the top of the viewport (screen).
+  end:"top 10%"
+→ End the animation when the top of the target element reaches 10% down from the top of the viewport.
+
+    start: "top 0%",
+    end: "top -130%",
+    It means we set the start at 0%, then we are setting the end at out of screen, when it will get scrolled out in top
+
+        // trigger: ".Page2 h1",
+    trigger: ".Page2 "
+        pin: true,
+    scrub: 2,
+    So Here what is that important is pin is used to pin the element, we want to pin the h1 till it scrolls,
+    so for that we need to set it's parent that is .Page2 as trigger, always set it's parent to teh trigger, when we want to pin the child
+    and u know the scrub
+    
+
+
+
+--- Learning about the SVG Animation 
+-- So here we are just creating the Curve, we use Path(which have the (x,y) coordinates) which creates actual Curver,
+- Bezier Curves:
+Don't understand much, but let's see about the it's SVG Img Code
+      <svg width="190" height="160" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 10 80 Q 95 10 180 80" stroke="black" fill="transparent" />
+      </svg>
+    </div>
+
+    Here svg tag is the container with some height and width which will contain the Curve
+    d="M 10 80 Q 95 10 180 80"  ->
+    M 10 80 -> Starting point of the Curve, 
+    Q 95 10 -> Middle point which creates the Curve( bent the line)
+    180 80  -> End point of the line
+
+    stroke="black" fill="transparent" 
+    color of the curve(line) 
+
+    ✅ In SVG:
+X starts from 0 → moves right
+Y starts from 0 → moves down
+
+So:
+📌 Top-left corner is (0, 0)
+📌 No need for negative values (unless you want to draw outside the visible SVG box)
+
+
+
+---- HTML
+    <div class="Div1">
+      <!-- <svg width="190" height="160" xmlns="http://www.w3.org/2000/svg"> -->
+      <svg
+        //width="1200"
+        width="1600"
+        height="600"
+        xmlns="http://www.w3.org/2000/svg"
+        style="background-color: aqua"
+      >
+        <!-- <path d="M 100 80 Q 95 150 110 80" stroke="black" fill="transparent" /> -->
+        <path
+          d="M 5 200 Q 340 200  1600 200"
+          stroke="white"
+          fill="transparent"
+        />
+        <!-- 22 190 340 312  600 200 -->
+      </svg>
+    </div>
+
+well u mostly  know about the height and width , also path x and y coordinates 
+Make sure u r coordinates of path are in the SVG container range(height and width) else it will not show(that curver)
+      <svg
+        //width="1200"
+        width="1600"
+
+                <path
+          d="M 5 200 Q 340 200  1600 200"
+          stroke="white"
+
+        So here i set the width 1200, but one of my x coordinate have the 1600, so it will show all the that part of the curve, same goes for the height(y coordinate too)
+
+
+
+--- JS
+let Path = "M 5 200 Q 340 200  1600 200";
+let FPath = "M 22 200 Q 600 200  1600 200";
+
+let div1 = document.querySelector(".Div1");
+
+// div1.addEventListener("click", (dets) => console.log("Field Clicked", dets.x));
+
+// div1.addEventListener("mouseenter", () => console.log(`Mouse Entered`));
+
+// div1.addEventListener("mouseleave", () => console.log(`Mouse Left`));
+
+div1.addEventListener("mousemove", (dets) => {
+  // console.log("Mouse Moved ", dets.x);
+  Path = `M 5 200 Q 600 ${dets.y}  1600 200`;
+  // console.log("Path: ", Path);
+  gsap.to("svg path ", {
+    attr: { d: Path },
+    duration: 0.3,
+    ease: "power1.inOut",
+  });
+});
+
+div1.addEventListener("mouseleave", () => {
+  gsap.to("svg path", {
+    attr: { d: FPath },
+    duration: 1.5,
+    ease: "elastic.inOut(1,0.2)",
+  });
+});
+
+
+
+So we created 2 Path variable with same value, we will change the 1st Path variable y coordinate to get string effect and other to get back at original position when we leave the that curve
+
+--Let's talk about the 
+div1.addEventListener("mousemove", (dets) => {
+  // console.log("Mouse Moved ", dets.x);
+  Path = `M 5 200 Q 600 ${dets.y}  1600 200`;
+  // console.log("Path: ", Path);
+  gsap.to("svg path ", {
+    attr: { d: Path },
+    duration: 0.3,
+    ease: "power1.inOut",
+  });
+});
+well we know that div1 is parent container of SVG, we added the the mousemove lister on that, which gives the callback with argument dets which is means details and it gives Object with info about coordinates which we definetly need, 
+we are setting the the coordinate got by dets for our curve, which is dets.y , well we need Vertical coordinates of curve
+  gsap.to("svg path ", {
+    attr: { d: Path },
+    we are applying the gsap animation on svg path which represents the path and setting the new path each time , we are getting new path with dets , which results in string like Moving curve whenever the mouse moves 
+
+
+    Also now it is just staying wherever we put the mouse , but if we want it toget back to the original position when we move out of the div1 area for that we will use 
+    div1.addEventListener("mouseleave", () => {
+  gsap.to("svg path", {
+    attr: { d: FPath },
+    duration: 1.5,
+    ease: "elastic.inOut(1,0.2)",
+  });
+});
+
+just set the Path Original Path which we stored in FPath
+
+
+
+
+--- well let's see something about CSS simple thing
+
+-HTML    <div class="Div1">
+      <div class="cursor"></div>
+    </div>
+
+-CSS    .Div1 {
+  height: 100%;
+  width: 100%;
+  background-color: #111;
+}
+body {
+  background-color: #111;
+}
+
+well here it is obvoius that body will give the bg black to all screen, but leave that body thing, if u remove it, . Div1 will not able to apply the bg to whole even tho we have set the height and width to 100%
+the thing is here, Div1 do not have any parent other than body and we have not set any height to the body, so .Div1 doesn't know the 100% of what 
+
+--there are 2 solution 
+- 1.  body,
+html {
+  height: 100%;
+} 
+.Div1 {
+  height: 100%;
+  width: 100%; 
+  background-color: #111;
+}
+just set the body + html (yes both) with height:100%;
+so now .Div1 can know the how much is 100%
+
+-2.
+.Div1 {
+  height: 100vh;
+  width: 100vw;
+  background-color: #111;
+}
+just set the height to 100vh and width to the 100vw
+
+
+
+--- Let's discuss little about the Events here
+✅ What’s happening here?
+
+Div1.addEventListener("click", (Event) => console.log(Event));
+Div1.addEventListener("mousemove", (Event) => console.log(Event));
+window.addEventListener("keyup", (Event) => console.log(Event));
+Each time the event fires (click, move, keyup), the browser gives you a special object with all the info about it — that’s what you're logging as Event.
+
+❓ What is Event here?
+It’s just a parameter you receive inside the callback. You can name it anything, like:
+
+(e) => ...
+(evt) => ...
+(dets) => ...
+(mouseDetails) => ...
+✅ The name doesn't matter — it’s just a variable.
+
+💡 But what kind of object is it?
+It depends on the event type:
+
+Event Type	Object Type Returned
+click, mousemove, mousedown	MouseEvent
+keyup, keydown	KeyboardEvent
+submit, change, etc.	Event (generic) or InputEvent
+
+
+
+----  ✅ background-image
+Used to set an image as the background of a block element (like a div).
+background-image: url("image-url");
+
+
+✅ background-size
+Controls how the background image is sized within the element.
+cover->	Makes the image cover the whole element, cropping if needed
+contain->	Makes the image fit inside the element, keeping full image
+auto->	Keeps image at original size
+100% 100%->	Stretches to fit both width and height exactly (can distort)
+
+
+✅ 1. background-repeat: no-repeat
+🔍 Prevents the image from repeating (default is repeat).
+✔️ Shows the image only once, no tiles.
+
+Value	What you'll see
+repeat->	Image repeated all over (tiled)
+no-repeat ->	Image shown only once
+repeat-x ->	Repeats only side to side
+repeat-y ->	Repeats top to bottom
+
+✅ 2. background-position: center center
+🔍 Places the image in the center of the box.
+
+Value	What it does
+top left	Aligns image to top-left corner
+center center	Places image dead center (best with no-repeat)
+right bottom	Moves image to bottom-right corner
+
+
+✅ 3. background-attachment: fixed
+🔍 Keeps the background fixed in place while you scroll.
+Makes a cool parallax feel.
+
+Try changing it:
+
+Value	Effect
+scroll	Image scrolls with the content (default)
+fixed	Image stays in place when page scrolls
+local	Scrolls with the element's own scroll (rarely used)
+
+
+ 2. <img> + object-fit
+✅ What is object-fit?
+Used for <img> inside a box, when we want the image to behave like a background would.
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+🔍 object-fit values:
+Value	What it does
+fill	Stretches the image to fill the box (can distort)
+contain	Shrinks image to fit inside box, entire image is visible (no crop)
+cover	Fills the box, cropping if needed — like background-size: cover
+none	Keeps original image size
+scale-down	Same as none or contain, whichever fi
+
+
+
+
+------ Let's see about the one Code   ----
+
+--- firstly let's just discuss how we created the cursor, that white one(like pointer )
+---HTML   
+ <div class="cursor"></div>
+    <div class="Div1">
+
+    </div>
+
+
+--- JS
+
+Div1.addEventListener("mousemove", (Event) => {
+  console.log(Event);
+  gsap.to(Cursor, {
+    x: Event.x,
+    y: Event.y,
+    delay: 0,
+    ease: "power.inOut",
+  });
+});
+
+
+
+
+--- CSS
+* {
+  margin: 0;
+  padding: 0;
+}
+body,
+html {
+  height: 100%;
+}
+.Div1 {
+  height: 100%;
+  width: 100%;
+  /* height: 100vh;
+  width: 100vw; */
+  background-color: #111;
+}
+
+.cursor {
+  height: 20px;
+  width: 20px;
+  background-color: antiquewhite;
+  border-radius: 50%;
+  box-shadow: 0px 0px 8px 4px antiquewhite;
+  position: fixed;
+  z-index: 9;
+}
+
+u know about the Div1, and as for cursor u might have noticed that it is separate element, but yet it is not taking any space(and we don't want to be either)
+How it is moving anywhere, well it can't move anywhere, 
+But to make sure it don't take any space on screen, we made it fixed , we could a used absolute as well(both don't take any space), also try with relative/sticky u will know 
+and as for how it is moving anywhere, well position only matter for , will take space or not, but for moving simple GSAP do the trick, let's see
+
+Div1.addEventListener("mousemove", (Event) => {
+  console.log(Event);
+  gsap.to(Cursor, {
+    x: Event.x,
+    y: Event.y,
+    delay: 0,
+    ease: "power.inOut",
+  });
+});
+
+the Div1 is a whole screen u know all that, we are adding the mousemove on it,
+Here Cursor represents the that Cursor we set to teh fixed , so we are setting the gsap.to some animation on that Cursor   , let Cursor = document.querySelector(".cursor");
+our mousemove returns some object which gives coordinates throught
+    x: Event.x,
+    y: Event.y,
+    And we are setting to our translate those coordinates, so our Cursor moves with our mouse 
+
+
+--- So now we just made the cursor, let's just create some img and when we hover on it, it scale the Cursor and when we left the scale to original
+
+--HTML
+    <div class="cursor"></div>
+    <div class="Div1">
+      <div class="InDiv">
+        <div class="Overlay"></div>
+        <img
+          src="https://wallpapers.com/images/featured/black-anime-background-r9sotj0k6u72a2zu.jpg"
+          alt=""
+        />
+      </div>
+    </div>
+
+    well here we just wanted to create one div(as container for image, our image can take 100% of that Container) and in it, just add the img
+    but is giving the gitter effect(like it is setting the scale to the differnt values on image(which it shouldn't )) so what are we trying to do is that, we are adding one overlay on that image , our event will trigger on that overlay not on img which will not cause that gitter effect
+
+
+--CSS
+.Div1 {
+  height: 100%;
+  width: 100%;
+  /* height: 100vh;
+  width: 100vw; */
+  background-color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.InDiv {
+  width: 40vw;
+  height: 30vh;
+  background-color: aquamarine;
+  /* background-image: url("https://wallpapers.com/images/featured/black-anime-background-r9sotj0k6u72a2zu.jpg");
+  background-size: cover; */
+  position: relative;
+}
+.Overlay {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 10;
+  background-color: transparent;
+}
+img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* body {
+  background-color: #111;
+} */
+.cursor {
+  height: 20px;
+  width: 20px;
+  background-color: antiquewhite;
+  border-radius: 50%;
+  box-shadow: 0px 0px 8px 4px antiquewhite;
+  position: fixed;
+  z-index: 9;
+}
+
+Let's discuss about it then ,  our Div1 is base which covers(represents) the whole screen , we added flex in it,
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  So all elements in it will be in Middle of whole screen (InDiv )
+      <div class="Div1">
+      <div class="InDiv">
+        <div class="Overlay"></div>
+        <img
+          src="https://wallpapers.com/images/featured/black-anime-background-r9sotj0k6u72a2zu.jpg"
+          alt=""
+        />
+      </div>
+    </div>
+
+  If u can see in comments that we also had added img there directly but bcoz gitter we added further elements and all 
+    .InDiv {
+  width: 40vw;
+  height: 30vh;
+  background-color: aquamarine;
+  /* background-image: url("https://wallpapers.com/images/featured/black-anime-background-r9sotj0k6u72a2zu.jpg");
+  background-size: cover; */
+  position: relative;
+}
+
+.Overlay {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 10;
+  background-color: transparent;
+}
+img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+Overlay and img are the children of teh .InDiv and we took the 100% w & h of it , so both got   width: 40vw;
+  height: 30vh;
+  but we only want the img take space, that's why we set the Overlay to the to absolute and set the z-index to 10, so it will come in top in stacking order, but we only want it for counter the gitter so we set it to the transparent
+  also in img  
+  object-fit: cover;    makes the image fit in our container of the 
+  Alos we set the z-index 99 so cursor comes at top most 
+
+
+
+--JS
+InDiv.addEventListener("mouseenter", () => {
+  gsap.to(Cursor, {
+    scale: 4,
+  });
+});
+InDiv.addEventListener("mouseleave", () => {
+  gsap.to(Cursor, {
+    scale: 1,
+  });
+});
+
+let's just discuss the JS for here, InDiv is parent of overlay and img  
+      <div class="InDiv">
+        <div class="Overlay"></div>
+        <img
+          src="https://wallpapers.com/images/featured/black-anime-background-r9sotj0k6u72a2zu.jpg"
+          alt=""
+        />
+      </div>
+when on that we enter our mouse our Cursor will scale to 4 and we left it will scale 1(default)

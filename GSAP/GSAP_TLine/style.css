@@ -1,0 +1,83 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body,
+html {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+.Div1 {
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  background-image: url("./Img/1347135.png");
+  /* background-image: url("D:/Anime Store/Pictures/PC BG Picture/1347135.png"); */
+  background-size: cover;
+}
+.InDiv {
+  color: #bf283b;
+  font-size: 40px;
+  font-weight: 600;
+  font-family: monospace;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  /* position: relative; */
+}
+.Cont {
+  height: 100vh;
+  width: 28vw;
+  background-color: #bf283c1e;
+  backdrop-filter: blur(10px);
+  position: absolute;
+  top: 0;
+  right: 0;
+  right: -28vw;
+}
+ul {
+  padding: 100px 0px;
+}
+li {
+  list-style: none;
+  font-size: 30px;
+  font-family: cursive;
+  padding: 10px 35px;
+}
+.Cont i {
+  position: absolute;
+  padding: 15px;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+i {
+  cursor: pointer;
+}
+button {
+  background-color: #cb4f6078;
+  position: absolute;
+  bottom: 20vh;
+  /* left: 0; */
+  border: 2px solid #bf283b;
+  color: #bf283b;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: cursive;
+  /* left: 28vw; */
+
+  /* width: 101vh;
+  height: 33vh; */
+  font-size: 60px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px 6px #bf283b;
+  left: 130px;
+  cursor: pointer;
+}
+.BtnWrapper {
+  /* display: grid;
+  place-items: center; */
+}

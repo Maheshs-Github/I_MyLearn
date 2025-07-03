@@ -1,0 +1,288 @@
+---- Let's make understanding 
+-- Well we were trying to make something like dashboard and i'm trying to apply the GSAP there 
+--- HTML
+ <div class="Div1">
+      <div class="InDiv">
+        <div class="Name">Coding Times</div>
+        <div class="Icon">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+        <div class="Cont">
+          <i class="fa-regular fa-rectangle-xmark"></i>
+          <ul>
+            <li>Home</li>
+            <li>My Work</li>
+            <li>Explore More</li>
+            <li>Something More</li>
+            <li>Contact Me</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+-- CSS
+* {
+  margin: 0;
+  padding: 0;
+}
+body,
+html {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+.Div1 {
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  background-image: url("./Img/1347135.png");
+  /* background-image: url("D:/Anime Store/Pictures/PC BG Picture/1347135.png"); */
+  background-size: cover;
+}
+.InDiv {
+  color: #bf283b;
+  font-size: 40px;
+  font-weight: 600;
+  font-family: monospace;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+}
+.Cont {
+  height: 100vh;
+  width: 28vw;
+  background-color: #bf283c1e;
+  backdrop-filter: blur(10px);
+  position: absolute;
+  top: 0;
+  /* right:0; */
+  right: -28vw;
+}
+ul {
+  padding: 100px 0px;
+}
+li {
+  list-style: none;
+  font-size: 30px;
+  font-family: cursive;
+  padding: 10px 35px;
+}
+.Cont i {
+  position: absolute;
+  padding: 15px;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+i {
+  cursor: pointer;
+}
+
+
+
+So here .Div1 is our Base Container that have the image ,which contains other element in .InDiv too
+.Div1 {
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  background-image: url("./Img/1347135.png");
+  /* background-image: url("D:/Anime Store/Pictures/PC BG Picture/1347135.png"); */
+  background-size: cover;
+}
+Alos here to set the background image make sure to move the image to that project or use Online one, else path with D:// are not accessable 
+
+InDiv contains the Name,Icon,Cont in it, we wrote
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+
+  there so all 3 elements will get flex, but Cont is a sideBar, we don't want it have flex effect it should be in a corner,u would have noticed that now our flex taking 3 elements in consdiration,
+  for that
+
+  .Cont {
+  height: 100vh;
+  width: 28vw;
+  background-color: #bf283c1e;
+  backdrop-filter: blur(10px);
+  position: absolute;
+  top: 0;
+  /* right: 0; */
+  right: -28vw;
+}
+well it is obvious that u will set the height and width , but we are trying to create the sideBar at right top corner, and we don't want the flex there(as it will consider it as element in it), so let's make it absolute/fixed 
+SO it will come out of natural order, then we set it's position to the  top:0 and right:0, so now it will be at corner, also set appropriate height and width 
+so we can take any element anywhere just set it to the absolute or fixed, make sure give the top,left,etc any u need then height and width(well if it element which have some already height and width then we don't need the, just took bcoz it was just box )
+well setting height and width is as per need, not have any effect
+
+Also to set that sideBar as transparent 
+  background-color: #bf283c1e;
+  backdrop-filter: blur(10px);
+  we used that backdrop-filter and that bg-color we set the color with more opacity(there is option when we hover on color)
+
+.Cont i {
+  position: absolute;
+  padding: 15px;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+we wanted the Icon at top right corner for that , we used same thing absolute and top and right
+just see for urself
+
+
+
+
+-- Let's discuss the JS then
+
+let OMenu = document.querySelector(".Icon i");
+
+OMenu.addEventListener("click", () => {
+  console.log("Menu Clicked");
+  T1.play();
+});
+//OMenu refers to that Menu Button, when i click that timeline will start
+
+let CMenu = document.querySelector(".Cont i");
+
+CMenu.addEventListener("click", () => {
+  console.log("Close Button Clicked");
+  // T1.reverse();
+  // T1.restart();
+  T1.progress(0).pause();
+});
+//It goes to to the original state before Animation started with 1.progress(0).pause();
+
+let T1 = gsap.timeline();
+
+T1.from(".Name", {
+  y: -300,
+  duration: 1,
+  opacity: 0,
+});
+//Firstly Name will come from -y(i.e from top ), we set the opacity 0 at beginning , well it is from 
+
+T1.to(".Cont", {
+  right: 0,
+});
+// If u have noticed the right:-28vw(In our CSS File ), so we set the .Cont at outside of the screen, it is not visible on the screen, well there will be scrollbar horizonral one , well we have set the 
+html {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+So it will not be the visible(the sideBar)
+In Animation we set it the right:0, we make the sideBar visible with Animation or just set the new position
+ (which was the width of .Cont )
+
+T1.from(".Cont li", {
+  x: 150,
+  delay: 0,
+  duration: 0.5,
+  stagger: 0.5,
+  opacity: 0,
+});
+
+T1.from(".Cont i", {
+  // y: -40,
+  opacity: 0,
+  duration: 1,
+});
+
+T1.pause();
+//So timeline will be paused by default
+
+
+
+---- well we created one button there 
+button {
+  background-color: #cb4f6078;
+  position: absolute;
+  bottom: 20vh;
+  /* left: 0; */
+  border: 2px solid #bf283b;
+  color: #bf283b;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: cursive;
+  /* left: 28vw; */
+
+  /* width: 101vh;
+  height: 33vh; */
+  font-size: 60px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px 6px #bf283b;
+  left: 130px;
+  cursor: pointer;
+}
+.BtnWrapper {
+  /* display: grid;
+  place-items: center; */
+}
+
+-- well we wanted to put it anywhere, so we used absolute, but if i put .Cont it will be placed accordingly that , that's why i take it aout of .Cont and set left(bcoz i wanted about the middle)
+
+
+--- To center the element what we can do
+create the wrapper for button then 
+  1. /* display: grid;
+      place-items: center; */
+  2. display:flex;
+     justify-content:center;
+  3.     position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 100px;
+    width: 141px;
+    (here we set the absolute + left: 130px; )
+
+
+✅ Common & Useful Timeline Methods in GSAP
+1. .play()
+▶️ Starts or resumes the timeline from where it left off
+T1.play();
+
+2. .pause()
+⏸️ Pauses the timeline at its current position
+T1.pause();
+
+3. .reverse()
+🔁 Plays the animation backward from current point
+T1.reverse();
+If you just finished play(), this will go backward smoothly.
+
+4. .restart()
+🔄 Goes back to the beginning and plays from start
+T1.restart();
+
+5. .progress(0).pause()
+⏪ Jumps to start (0%) and stays there
+T1.progress(0).pause(); // Reset to initial state without playing
+Like rewinding a video to the beginning and pausing.
+
+6. .progress(1)
+⏩ Jump to end (100%) instantly
+T1.progress(1); // Immediately finishes the timeline
+
+7. .seek(time)
+⏱️ Jumps to a specific time (in seconds)
+T1.seek(1.5); // Go to 1.5 seconds in the timeline
+
+8. .kill()
+💥 Completely destroys the timeline
+T1.kill(); // Removes all animations and memory
+
+9. .clear()
+🧹 Removes all animations from the timeline, keeps the object
+T1.clear(); // Clean timeline, but can reuse it
+
+10. .timeScale(value)
+⏩⏪ Controls the speed of the animation
+T1.timeScale(2); // 2x faster
+T1.timeScale(0.5); // 0.5x (slower)

@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.Page2 {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(75, 189, 246);
+  overflow-x: auto; /* Enable horizontal scrolling */
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.Page2 h1 {
+  font-size: 30vw; /* Very large responsive text size */
+  padding: 0 20px; /* Add some padding so text isn't flush against edges */
+  display: inline-block; /* Needed for proper horizontal scrolling */
+  line-height: 1; /* Tight line height for huge text */
+}
+.Page3 {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(232, 242, 96);
+}

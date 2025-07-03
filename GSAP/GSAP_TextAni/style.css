@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+body,
+html {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+h1 {
+  font-family: cursive;
+  /* background-color: #bf283b; */
+  overflow: hidden;
+  /* box-shadow: 2px 2px 2px 2px #bf283b; */
+}
+h1 span {
+  display: inline-block;
+  color: #bf283b;
+  font-size: 60px;
+  text-shadow: 2px 2px 8px #bf283b;
+}

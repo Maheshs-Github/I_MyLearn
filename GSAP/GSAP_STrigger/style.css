@@ -31,18 +31,24 @@ body {
 .Page2 {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 50px;
-  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
   background-color: rgb(75, 189, 246);
-  height: 100%;
-  width: 100%;
-  /* overflow-x: scroll; */
+  overflow-x: auto;
+  /* Enable horizontal scrolling */
+  white-space: nowrap; /* Prevent text from wrapping */
 }
+
 .Page2 h1 {
-  font-size: 30vw;
-  overflow: hidden;
+  font-size: 30vw; /* Very large responsive text size */
+  padding: 0 20px; /* Add some padding so text isn't flush against edges */
+  display: inline-block; /* Needed for proper horizontal scrolling */
+  line-height: 1; /* Tight line height for huge text */
+  /* transition: transform 3s ease-in; */
 }
+/* .Page2 h1:hover {
+  transform: translateX(-4500px);
+} */
 .B1,
 .B2 {
   font-size: 40px;
@@ -59,27 +65,4 @@ body {
   height: 200px;
   width: 200px;
   background-color: aqua;
-}
-
-.page2 {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  background: #caf0f8;
-  padding: 50px;
-  overflow: hidden;
-}
-
-.scroll-word-wrapper {
-  width: 100vw; /* Or fixed if needed */
-  overflow: hidden;
-}
-
-.scroll-word {
-  white-space: nowrap;
-  font-size: 10vw;
-  color: #333;
-  display: inline-block;
-  transform: translateX(100%);
 }

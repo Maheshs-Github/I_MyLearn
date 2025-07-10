@@ -20,7 +20,11 @@ h1 {
 }
 h1 span {
   display: inline-block;
-  color: #bf283b;
+  color: #cfc2c4;
   font-size: 60px;
-  text-shadow: 2px 2px 8px #bf283b;
+  /* text-shadow: 2px 2px 8px #bf283b; */
+  text-shadow: 0 0 5px #bf283b, 0 0 10px #bf283b, 0 0 20px #ff2f56,
+    0 0 40px #ff2f56;
+  /* text-shadow: 0 0 5px #00f0ff, 0 0 10px #00f0ff, 0 0 20px #00cfff,
+    0 0 40px #009eff; */
 }

@@ -213,7 +213,7 @@ PostListContextProvier  is just a wrapper, we use in App(we wrap whole content w
   } else if (action.type === "ADD_POST") {
     PostData = [
       ...currentPostList,
-      {
+      {~
         ID: action.payload.PostID,
         Title: action.payload.Title,
         Body: action.payload.Description,
@@ -239,3 +239,15 @@ if u are doing default export,  make sure declare and intialize first then only 
 
 export const ContextM=createContext(null);
 for named u can directly go like
+
+
+
+
+
+It's Meeting Time 11:57
+
+
+
+
+Going to Eat 13:52
+

@@ -1,0 +1,831 @@
+🧱 1. What is <meta>?
+HTML tag placed in the <head> of a webpage.
+Gives metadata (information about the page).
+Not shown on the page, but used by browsers, search engines, and social media.
+
+
+🧠 2. What is metadata?
+Literally means "data about data".
+In web terms, it tells the browser things like:
+What language the page uses
+How it should be displaye
+Who wrote it
+How to describe it in search results
+
+
+📱 3. Special Meta: Viewport Tag
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+🔍 Meaning:
+Part	What it does
+name="viewport"	Tells browser you're controlling how the page scales on screens
+width=device-width	Page width = screen width (on phone, tablet, desktop)
+initial-scale=1.0	No zoom initially (100% zoom)
+
+
+--- Some important meta Tags:
+| Purpose                | Example                                                                  |
+| ---------------------- | ------------------------------------------------------------------------ |
+| Set character encoding | `<meta charset="UTF-8">`                                                 |
+| Control mobile view    | `<meta name="viewport" content="width=device-width, initial-scale=1.0">` |
+| Describe the page      | `<meta name="description" content="Learn Tailwind with Mahesh.">`        |
+| Set author             | `<meta name="author" content="Mahesh Mane">`                             |
+
+
+🧩 4. Why is the viewport tag important?
+Without it:
+Mobile browsers default to a fixed desktop-size layout
+Your page might look zoomed out and tiny on a phone
+Responsive frameworks like Tailwind’s sm:, md: don’t behave correctly
+
+With it:
+Page fits properly on all devices
+Breakpoints in Tailwind work as expected
+Better user experience on mobile ✅
+
+🎨 5. Tailwind + Viewport
+In Tailwind, breakpoints are like this:
+<h1 class="text-xl md:text-3xl lg:text-5xl">Welcome</h1>
+On small screens, it uses text-xl
+On medium (md) screens, it uses text-3xl
+On large (lg) screens, it uses text-5xl
+
+👉 These only work correctly if the viewport tag is present!
+
+🧠 Final Summary (Mahesh-style):
+The <meta name="viewport"> tag tells the browser:
+“Hey! This page is responsive. Match the screen size and show everything in real scale.”
+
+It's the key to making your Tailwind or any responsive layout look correct on all devices 📱💻🖥️
+
+
+
+
+---- 🌟 Tailwind CSS – Basic Concepts Simplified
+
+1. 🔧 Utility-First CSS Framework
+Tailwind is called a utility-first framework because it gives you small, reusable classes (called utilities) to style your HTML elements directly.
+
+🧱 Think of it like using building blocks — each block does one small thing.
+
+
+Example:
+<button class="bg-blue-500 text-white p-2 rounded">Click Me</button>
+Here:
+bg-blue-500 = background color
+text-white = white text
+p-2 = padding
+rounded = rounded corners
+
+2. 📐 Responsive Design with Breakpoints
+Tailwind makes it super easy to style for different screen sizes.
+You just prefix the utility with a breakpoint:
+
+<img class="w-16 md:w-32 lg:w-48" />
+Means:
+w-16 = default (small screens)
+md:w-32 = when screen ≥ 768px
+lg:w-48 = when screen ≥ 1024px
+
+Breakpoint	Screen width
+sm:	≥ 640px
+md:	≥ 768px
+lg:	≥ 1024px
+xl:	≥ 1280px
+
+3. 🎨 Customization
+Tailwind uses a default theme (like spacing, colors, font sizes), but you can customize everything in the tailwind.config.js file.
+You can add:
+Your own colors
+Fonts
+Breakpoints
+Utilities
+
+4. 💥 Hover, Focus, and State Styling
+Tailwind lets you easily add styles based on user actions like hover or focus.
+
+<button class="bg-blue-500 hover:bg-blue-700">Hover Me</button>
+✅ hover:bg-blue-700 applies only when the user hovers
+
+Other states:
+focus:
+active:
+disabled:
+
+
+
+
+---- 🧰 What does “utility” mean in Tailwind CSS?
+A utility in Tailwind is just a single-purpose CSS class that does one thing only, like:
+
+Utility Class	What it does
+w-32--->	Sets width to 8rem
+text-red-500 --->	Sets text color to red
+p-4	---> Adds padding 1rem
+rounded-lg	----> Adds large border radius
+
+Think of utilities like LEGO blocks — you stack them together to build UI.
+
+📱 Breakpoint-based Utilities
+Now, Tailwind makes it super easy to apply a utility only at a specific screen size (responsive design).
+You do that by prefixing the utility class with the breakpoint name and a colon:
+
+<img class="w-16 md:w-32 lg:w-48" src="..." />
+Let’s break it down 👇
+
+Class	When it applies	Width set to
+w-16	Always (default)	4rem
+md:w-32	On medium screens (≥768px)	8rem
+lg:w-48	On large screens (≥1024px)	12rem
+
+So yes — w-32 is the utility being applied at md: breakpoint.
+
+🧠 How Tailwind Breakpoints Work:
+Prefix	Screen Width
+sm:	≥ 640px
+md:	≥ 768px
+lg:	≥ 1024px
+xl:	≥ 1280px
+2xl:	≥ 1536px
+
+You can apply any utility at these breakpoints.
+
+✅ So in short:
+✅ Utility = a small, single-use CSS class like w-32, p-4, bg-blue-500
+✅ Breakpoint = screen size level like md:
+✅ md:w-32 = Apply w-32 only when screen width ≥ 768px
+
+
+
+
+---- Some ShortCuts Here
+rafce -> React Arrow Function Component Export
+
+
+
+------- Lenght for the Tailwind
+m-1 = 4px(0.25 rem),
+m-2 = 8px,
+m-3 = 12px,
+m-4 = 16px (1 rem), 
+and so on.
+
+❓ What if you want 10px exactly?
+You have 2 options:
+
+✅ Option 1: Use Tailwind Closest Value
+Since:
+m-2 = 8px
+m-3 = 12px
+So go with m-3 (12px) — it's the closest to 10px.
+Tailwind prefers consistency over pixel-perfection.
+
+
+✅ Option 2: Use Arbitrary Value (for exact control)
+Tailwind lets you write any custom value using []:
+
+m-[10px]     → margin: 10px  
+m-[2rem]     → margin: 2rem  
+m-[5%]       → margin: 5%
+You can also do this for mt, ml, px, etc.:
+
+mt-[10px]    → margin-top: 10px  
+px-[15%]     → padding-left & right: 15%
+
+
+
+
+We can use the max-width, like i want the element to have some max width, it should not grow after that width 
+max-w-* in Tailwind sets the maximum width a container can grow to.
+It’s useful when you want to limit how wide an element can stretch, even if the screen is bigger.
+
+✅ Valid Tailwind max-w-* classes include:
+Class	Width value
+max-w-xs	20rem (320px)
+max-w-sm	24rem (384px)
+max-w-md	28rem (448px)
+max-w-lg	32rem (512px)
+max-w-xl	36rem (576px)
+max-w-2xl	42rem (672px)
+max-w-3xl	48rem (768px)
+max-w-4xl	56rem (896px)
+...	...
+max-w-full	100%
+max-w-screen-sm	full screen up to 640px
+
+🔧 Want a Custom Max Width?
+Use arbitrary values like:
+max-w-[700px]   → max-width: 700px;
+max-w-[80%]     → max-width: 80%;
+
+
+
+✅ 1. max-h-*, min-w-*, min-h-* – Size Limits
+Utility	Use It To...	
+Example
+max-h-*	Limit vertical height	max-h-[400px] for scroll box
+min-w-*	Ensure element doesn’t shrink too small	min-w-[200px] for buttons
+min-h-*	Set minimum height	min-h-screen for layouts
+
+🔹 Example: Scrollable box
+<div className="max-h-[300px] overflow-y-auto">
+  {/* Long content */}
+</div>
+
+
+✅ 2. w-*, h-* – Width and Height Control
+Set exact or relative dimensions:
+<div className="w-[300px] h-[200px]">Fixed size</div>
+<div className="w-1/2">50% width</div>
+<div className="h-screen">Full viewport height</div>
+💡 Combine with max-w-* to limit stretch.
+
+
+✅ 3. flex, grid, and gap-* – Layout Helpers
+Utility	Description
+flex, flex-col, items-center, justify-between	Core layout building blocks
+gap-*	Adds spacing between children
+grid, grid-cols-*	For multi-column layouts
+
+🔹 Example:
+<div className="flex justify-between items-center">
+  <div>Left</div>
+  <div>Right</div>
+</div>
+
+
+✅ 4. container + max-w-* – Page Wrappers
+
+<div className="container mx-auto px-4 max-w-5xl">
+  {/* Page content */}
+</div>
+✅ Use this pattern for centered, readable layouts.
+
+You want your content to:
+Be centered → mx-auto
+Not touch the screen edge → px-4
+Not get too wide on big monitors, we set the max width of 5xl so it will not grow from that width  → max-w-5xl
+Be responsive out of the box for each breakpoint→ container
+
+
+✅ 6. overflow-* – Handle Overflowing Content
+
+overflow-auto   // scroll when needed  
+overflow-hidden // clip the content  
+overflow-x-scroll // horizontal scroll
+overflow-x-hidden //to hide the x overflow
+
+
+✅ 8. z-* – Control Layering
+<div className="z-50">On top</div>
+<div className="z-10">Behind</div>
+Super useful for modals, dropdowns, sticky headers.( that is just a Z-index)
+
+✅ 9. inset-*, top-*, left-*, absolute, relative
+For positioning elements:
+<div className="relative">
+  <div className="absolute top-2 right-4">Close ❌</div>
+</div>
+inset-4  ≈  top-4 right-4 bottom-4 left-4
+
+✅ 10. Responsive Breakpoints
+Apply utilities only at specific screen sizes:
+
+<p className="text-base md:text-lg lg:text-xl">
+  Responsive font size
+</p>
+Use with any utility, like max-w-*, p-*, grid-cols-* etc.
+
+
+
+---- Let's see about the Tailwind and Boostrap (that 1 row can have 12 cols )
+🔍 Bootstrap vs Tailwind Grid – The Real Difference
+🔵 In Bootstrap:
+
+<div class="row">
+  <div class="col-4">4/12</div>
+  <div class="col-8">8/12</div>
+</div>
+✅ The .row class automatically creates 12 columns behind the scenes.
+✅ Each .col-* class tells how many of those 12 to occupy.
+(We can only have 12 cols in 1 row, we can also omit some col to have specific layout)
+
+
+🔴 In Tailwind CSS, it’s more manual (but flexible):
+You create a grid yourself:
+
+<div className="grid grid-cols-12 gap-4">
+  <div className="col-span-4 bg-red-200">4/12</div>
+  <div className="col-span-8 bg-blue-200">8/12</div>
+</div>
+Tailwind Class	Meaning
+grid	Sets display: grid
+grid-cols-12	Creates 12 equal-width columns
+col-span-4	This item spans 4 out of 12 columns
+col-span-8	This one spans 8 of them
+
+(well there is 1 thing that we can have the span size like this as well)
+<div className="grid grid-cols-12 gap-4">
+  <div className="col-span-12 bg-red-200">4/12</div>
+  <div className="col-span-12 bg-blue-200">8/12</div>
+</div>
+Here col-span-12,  tells how much col to take (like how much col to span)
+(Boostrap was more of a row , col strucure like 1 row will have 10 cols occupy)
+(but in tail we define the cols first then how many rows in it with col-span-*)
+
+
+---- Let's see one example with a Cutom CSS for grid
+--- HTML
+ <div class="custom-grid">
+  <div class="col col-4">4 Columns</div>
+  <div class="col col-8">8 Columns</div>
+</div>
+
+--- CSS
+ .custom-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+  margin: 20px;
+}
+
+.col {
+  background-color: lightblue;
+  padding: 20px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+/* Column spans */
+
+.col-4 { grid-column: span 4; }
+.col-8 { grid-column: span 8; }
+//grid-column  -> CSS property of the grid to set how wide/long grid col will be
+
+
+--- Let's compare actual CSS with it's Tailwind classes
+-   display: grid;
+  grid-template-columns: repeat(12, 1fr);   --->  grid grid-cols-12
+-   { grid-column: span 4; }   --->   col-span-4
+
+
+
+
+
+
+
+
+---- Let's understand the our Small Tailwind Project
+
+-- NavBar Component
+import React, { useState } from "react";
+import Styles from "./NavBar.module.css";
+
+const NavBar = () => {
+  const [Show, setShow] = useState(false);
+  return (
+    <div>
+      {/* <h1>Hello This is a NavBAr</h1> */}
+      {/* NavBar Starts Here */}
+      <div className="w-full bg-gray-300 flex justify-between items-center  h-[60px] p-2 shadow-2xl">
+        <div className="text-2xl whitespace-nowrap md:text-3xl text-blue-500 font-bold cursor-pointer">
+          Anime Times
+        </div>
+        <div className="Opns basis-[500px]">
+          <ul className=" hidden md:flex md:justify-evenly md:items-center ">
+            <li className="font-bold text-xl cursor-pointer">Home</li>
+            <li className="font-bold text-xl cursor-pointer">About US</li>
+            <li className="font-bold text-xl cursor-pointer">Contact US</li>
+          </ul>
+        </div>
+        <div className="SLOpns">
+          <button className=" hidden md:block md:border-2 md:rounded-sm md:bg-sky-400 md:text-white md:p-1.5 md:font-medium cursor-pointer">
+            Login Up{" "}
+          </button>
+          <span
+            className="md:hidden text-3xl font-bold px-2 cursor-pointer  border-2 rounded-md m-3 p-0"
+            onClick={() => {
+              setShow(true);
+            }}
+          >
+            &#9776;
+          </span>
+        </div>
+      </div>
+      So this is whole div, 
+
+
+
+
+      {/* Options Pop Up */}
+      {Show && (
+        <div className="absolute rounded-md w-[40%]  h-fit bg-gray-300 right-0 top-0 pt-14 shadow-2xl m-1 ">
+          <ul>
+            <li className="pl-3 pb-6 text-2xl font-medium">Home</li>
+            <li className="pl-3 pb-6 text-2xl font-medium">About Us</li>
+            <li className="pl-3 pb-6 text-2xl font-medium">Contact Us</li>
+          </ul>
+          <div
+            className="absolute top-0 right-0 text-4xl font-bold border-2 rounded-md m-3 p-0 leading-none flex justify-center items-center h-[40px] w-[40px] cursor-pointer"
+            onClick={() => {
+              setShow(false);
+            }}
+          >
+            &times;
+          </div>
+        </div>
+      )}
+      {/* <div className={Styles.Img1}></div> */}
+      {/* <div className={Styles.Img2}></div> */}
+      <div className="w-screen h-screen bg-cover bg-center bg-[url('https://mfiles.alphacoders.com/101/thumb-1920-1013531.png')] md:bg-[url('https://images4.alphacoders.com/973/thumb-1920-973967.jpg')] "></div>
+
+      {/* NavBar Ends  Here */}
+    </div>
+  );
+};
+
+export default NavBar;
+
+// Going to Eat 14:00
+
+
+
+
+--- Let's discuss code it about one by one 
+      <div className="w-full bg-gray-300 flex justify-between items-center  h-[60px] p-2 shadow-2xl">
+        <div className="text-2xl whitespace-nowrap md:text-3xl text-blue-500 font-bold cursor-pointer">
+          Anime Times
+        </div>
+
+So here 1st div is a base div for the NavBar Component & NavBar itself 
+-1stly why do we used the w-full
+
+✅ w-full
+Means:
+"Take up 100% of the width of the parent element."
+So if the parent is 700px wide, w-full = 700px.
+It’s relative, depends on the container.
+✅ Commonly used in layouts to fill space within containers.
+
+✅ w-screen
+Means:
+"Take up the full width of the viewport (screen width)."
+Viewport = your browser’s visible window
+✅ This is absolute, usually 100vw
+
+
+🟥 So why does w-screen sometimes "overflow"?
+That happens when:
+🧨 The body already has padding or margins
+→ Now w-screen overflows by that amount
+🧨 Scrollbars or nested containers exist
+→ w-screen still stretches to full device width, ignoring scrollbars, leading to side-scroll
+🧨 You're using w-screen inside a small container
+→ It jumps outside that container (because it ignores parent size)
+
+If you're using w-screen, also add:
+overflow-x-hidden
+to <body> or container to avoid unexpected horizontal scroll.
+
+
+- h-[60px] p-2 shadow-2xl
+gives the width of 60px to our NavBar, some padding , setting shadow make it more eye caching
+
+
+--         <div className="text-2xl whitespace-nowrap md:text-3xl text-blue-500 font-bold cursor-pointer">
+          Anime Times
+        </div>
+
+So this is div of the our Web Title,
+Here , we are setting some style for mobile first like text-2xl will be applied for mobile screen till it hit md breakpoint which is a 760 or something , then screen greater or equal md we set it to text-3xl 
+
+then what is whitespace-nowrap, well here we use it SO our Title doesn’t wrap
+Some other values of it:
+1. Use the whitespace-normal utility to cause text to wrap normally within an element
+2. Use the whitespace-nowrap utility to prevent text from wrapping within an element
+3. Use the whitespace-pre utility to preserve newlines and spaces within an element
+
+
+
+--- Let's discuss it further
+        <div className="Opns basis-[500px]">
+          <ul className=" hidden md:flex md:justify-evenly md:items-center ">
+            <li className="font-bold text-xl cursor-pointer">Home</li>
+            <li className="font-bold text-xl cursor-pointer">About US</li>
+            <li className="font-bold text-xl cursor-pointer">Contact US</li>
+          </ul>
+        </div>
+-well firstly Opns is just Custom class (u know that habbit)
+-What is basis-[500px], it is tailwind utility class for the flex-basis
+✅ What is flex-basis?
+flex-basis defines the initial size of a flex item before it starts growing or shrinking due to flex-grow and flex-shrink.
+
+What happens?
+basis-[300px] means:
+👉 "I prefer 300px width, but I can shrink or grow."
+min-w-[300px] means:
+👉 "I will never go below 300px, even if things overflow."
+
+- Also we set the ul to the hidden , by default (u know our Tailwind is mobile first )So on all small screens it will be hidden, but for the md break point it will have that styles and also as our ul is hidden it will not show the it's li, for md it will show those li's as well u know that
+
+
+
+--- Let see this part 
+        <div className="SLOpns">
+          <button className=" hidden md:block md:border-2 md:rounded-sm md:bg-sky-400 md:text-white md:p-1.5 md:font-medium cursor-pointer">
+            Login Up{" "}
+          </button>
+          <span
+            className="md:hidden text-3xl font-bold px-2 cursor-pointer  border-2 rounded-md m-3 p-0"
+            onClick={() => {
+              setShow(true);
+            }}
+          >
+            &#9776;
+          </span>
+        </div>
+
+So Here as well we set the button to hidden till it hit the md breakpoint, We also set the md:block,  but if u have seen the last time we didn't set anything 
+      <ul className=" hidden md:flex md:justify-evenly md:items-center ">
+but here
+                 <button className=" hidden md:block md:border-2 md:rounded-sm md:bg-sky-400 md:text-white md:p-1.5 md:font-medium cursor-pointer">
+bcoz when we set hidden it set the display:none,  that's why at md breakpoint we need ti set the display:none to something that is display:block (here) or display:inline-block
+Last time we set the display:flex there(So it change the display:none to flex)
+
+
+-- So Up next we did 
+          <span
+            className="md:hidden text-3xl font-bold px-2 cursor-pointer  border-2 rounded-md m-3 p-0"
+            onClick={() => {
+              setShow(true);
+            }}
+          >
+            &#9776;
+          </span>
+So this span basically gives the (3 lines), which will give dropdown of those li's for the small screens
+So it will visible for the small screen, but for md breakpoint we set it to hidden
+Leave JS part for now
+
+
+
+
+-- let's see our pop part
+      {Show && (
+        <div className="absolute rounded-md w-[40%]  h-fit bg-gray-300 right-0 top-0 pt-14 shadow-2xl m-1 ">
+          <ul>
+            <li className="pl-3 pb-6 text-2xl font-medium">Home</li>
+            <li className="pl-3 pb-6 text-2xl font-medium">About Us</li>
+            <li className="pl-3 pb-6 text-2xl font-medium">Contact Us</li>
+          </ul>
+          <div
+            className="absolute top-0 right-0 text-4xl font-bold border-2 rounded-md m-3 p-0 leading-none flex justify-center items-center h-[40px] w-[40px] cursor-pointer"
+            onClick={() => {
+              setShow(false);
+            }}
+          >
+            &times;
+          </div>
+        </div>
+      )}
+Well u know about the JS part here, leave that
+well basically when the Show is true this one will be visible and Show is set by that 3 lines
+        <div className="absolute rounded-md w-[40%]  h-fit bg-gray-300 right-0 top-0 pt-14 shadow-2xl m-1 ">
+So this one have position:absolute, so it will be positioned realtive to it's parent(It is out of original flow)
+it's parent is directly the root div so it will be basically position relative to that dev(root)
+We are setting the w-40% then height-> which will be fit to the content in it and then we are positioning it in a top right corner, it have some margin too, so it will not stick to the corner of screen
+For font-size-> text-2xl
+For font-weight -> font-medium
+
+---         <div
+            className="absolute top-0 right-0 text-4xl font-bold border-2 rounded-md m-3 p-0 leading-none flex justify-center items-center h-[40px] w-[40px] cursor-pointer"
+            onClick={() => {
+              setShow(false);
+            }}
+          >
+            &times;
+          </div>
+In that Div we want the X sign where we will set the Show to false, and we want it to be in top corner, also we set it that X div to absolute as we want it to be in out options div, with border-2 rounded-md m-3 p-0 we are setting the border to X icon and margin , padding,   with h-[40px] w-[40px] cursor-pointer  setting h nad w to thta sign 
+
+---let's see about positioning
+
+✅ absolute Positioning
+Requires a positioned parent (relative, absolute, or fixed)
+If no positioned parent is found → positioned relative to the body
+<div className="relative bg-gray-100 h-[200px]">
+  <div className="absolute top-2 right-2 bg-red-500 p-2">I'm absolute</div>
+</div>
+🧠 The child is now positioned relative to its parent — relative is key!
+
+✅ fixed Positioning
+Ignores all parents
+Always positioned relative to the viewport/screen
+Doesn’t move when you scroll
+<div className="fixed top-0 right-0 bg-blue-500 p-2">
+  I'm fixed — always at top-right
+</div>
+🔒 Great for sticky headers, back-to-top buttons, floating chat icons, etc.
+
+-🧪 Example to See It
+<div className="relative h-[400px] bg-gray-200">
+  <div className="absolute top-2 right-2 bg-red-300 p-2">
+    Absolute (inside box)
+  </div>
+</div>
+<div className="fixed bottom-4 right-4 bg-blue-300 p-2">
+  Fixed (always bottom-right)
+</div>
+
+🧪 Try scrolling — the absolute box scrolls away with the content,
+but the fixed one stays visible at all times.
+
+
+
+
+      <div className="w-screen h-screen bg-cover bg-center bg-[url('https://mfiles.alphacoders.com/101/thumb-1920-1013531.png')] md:bg-[url('https://images4.alphacoders.com/973/thumb-1920-973967.jpg')] "></div>
+Also with this we are setting the background- imgae , full screen h & w then it will be cover , it will show one image for mobile screen and other for after md breakpoint
+Also make sure to set it outside div, else it will be some other inner div which will show on that div , not as whole bg       
+
+
+
+
+
+---- Let's discuss about the Student Component(about One Piece Best Char & Arcs)
+import React from "react";
+
+const Student = () => {
+  return (
+    <div className="flex justify-center items-center flex-col mt-4 mb-4">
+      <div className="flex justify-center items-center flex-col mt-4 mb-4">
+        {/* <p className="text-blue-500 text-3xl font-bold">
+          Hard Work No ShortCuts!
+        </p> */}
+        <div className="w-[200px] h-4 border-b-6 border-yellow-400 mt-2 rounded-sm"></div>
+      </div>
+      {/* This is a Best Char Section */}
+
+      <h2 className="text-[#EE4D57] text-xl md:text-3xl font-bold mt-[30px]">
+        Best One Piece Characters
+      </h2>
+      <div className="flex justify-evenly items-center flex-nowrap mt-8 mb-8 p-3 gap-4">
+        <div className="flex justify-center items-center flex-col mt-4 mb-4 font-mono font-bold">
+          <img
+            src="https://i.pinimg.com/736x/6f/b6/f9/6fb6f9bbb490773843c19fdb42d2bf6f.jpg"
+            alt=""
+            className="h-[20%] w-[20%] rounded-[50%] md:h-[30%] md:w-[30%]"
+          />
+          <p className=" text-md md:text-2xl whitespace-normal">Luffy</p>
+          <p className="text-xs md:text-sm">Meat & Crazy Fella </p>
+        </div>
+        <div className="flex justify-center items-center flex-col mt-4 mb-4 font-mono font-bold">
+          <img
+            src="https://i.pinimg.com/1200x/0e/37/c2/0e37c2887c7a300081fc01c139a8d066.jpg"
+            alt=""
+            className="h-[20%] w-[20%] rounded-[50%] md:h-[30%] md:w-[30%]"
+          />
+          <p className="text-md md:text-2xl"> Zoro</p>
+          <p className="text-xs md:text-sm"> Sword & Sleeping fella </p>
+        </div>
+        <div className="flex justify-center items-center flex-col mt-4 mb-4 font-mono font-bold">
+          <img
+            src="https://i.pinimg.com/736x/b8/dd/4c/b8dd4ce7aa461fc25baa766f0c1b50bb.jpg"
+            alt=""
+            className="h-[20%] w-[20%] rounded-[50%] md:h-[30%] md:w-[30%]"
+          />
+          <p className="text-md md:text-2xl">Sanji</p>
+          <p className="text-xs md:text-sm"> Womanizer & Cooking Fella </p>
+        </div>
+      </div>
+
+      {/* This is a Best Arcs Section */}
+      <h2 className="text-[#EE4D57] text-3xl font-bold my-[30px] p-3">
+        Best One Piece Arcs
+      </h2>
+      <div className="flex justify-evenly items-center  mt-8 mb-8 flex-nowrap gap-4 w-full p-3">
+        <div className="flex justify-center items-center flex-col mt-4 mb-4 font-mono font-bold h-[150px] w-[250px]">
+          <img
+            src="https://preview.redd.it/tfqiq1aqjx351.png?width=1080&crop=smart&auto=webp&s=9f3e62eb96ab618196669178e23acce23b665c90"
+            alt=""
+            // className="h-[50%] w-[50%] rounded-3xl"
+            className="h-[150px] w-[250px] rounded-3xl"
+          />
+          <p className="text-2xl">Wano Arc</p>
+          <p className="text-sm">
+            Wano Arc was just OP, man it was just Something{" "}
+          </p>
+        </div>
+        <div className="flex justify-center items-center flex-col mt-4 mb-4 font-mono font-bold h-[150px] w-[250px] ">
+          <img
+            src="https://images5.alphacoders.com/134/thumb-1920-1346850.png"
+            alt=""
+            // className="h-[50%] w-[50%] rounded-3xl"
+            className="h-[150px] w-[250px] rounded-3xl"
+          />
+          <p className="text-2xl"> Egg Head Arc</p>
+          <p className="text-sm">
+            {" "}
+            Man Egg Head just been going & One thing after another{" "}
+          </p>
+        </div>
+        <div className="flex justify-center items-center flex-col mt-4 mb-4 font-mono font-bold h-[150px] w-[250px]">
+          <img
+            src="https://static.bandainamcoent.eu/high/one-piece/one-piece-odyssey/03-news/OPOD_LOG_Marineford/CS060820.jpg"
+            alt=""
+            // className="h-[50%] w-[50%] rounded-3xl"
+            className="h-[150px] w-[250px] rounded-3xl"
+          />
+          <p className="text-2xl">MarineFord</p>
+          <p className="text-sm">
+            {" "}
+            Do really i have talk about it , Damn liked Amazon Lilly too
+          </p>
+        </div>
+        <div className="flex justify-center items-center flex-col mt-4 mb-4 font-mono font-bold h-[150px] w-[250px]">
+          <img
+            src="https://images2.alphacoders.com/165/thumb-1920-165032.jpg"
+            alt=""
+            // className="h-[50%] w-[50%] rounded-3xl"
+            className="h-[150px] w-[250px] rounded-3xl"
+          />
+          <p className="text-2xl">SkyPie Arc</p>
+          <p className="text-sm"> Island in Sky, Do exist </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Student;
+
+
+
+--- SO    <div className="flex justify-center items-center flex-col mt-4 mb-4">
+      <div className="flex justify-center items-center flex-col mt-4 mb-4">
+        {/* <p className="text-blue-500 text-3xl font-bold">
+          Hard Work No ShortCuts!
+        </p> */}
+        <div className="w-[200px] h-4 border-b-6 border-yellow-400 mt-2 rounded-sm"></div>
+      </div>
+
+very 1st one is a base div which sets all the divs in it to the col with center, 
+w-[200px] h-4 border-b-6 border-yellow-400 mt-2 rounded-sm,   we just created the line with this one(horizontal)
+
+
+
+
+
+      {/* This is a Best Char Section */}
+
+      <h2 className="text-[#EE4D57] text-xl md:text-3xl font-bold mt-[30px]">
+        Best One Piece Characters
+      </h2>
+      <div className="flex justify-evenly items-center flex-nowrap mt-8 mb-8 p-3 gap-4">
+        <div className="flex justify-center items-center flex-col mt-4 mb-4 font-mono font-bold">
+          <img
+            src="https://i.pinimg.com/736x/6f/b6/f9/6fb6f9bbb490773843c19fdb42d2bf6f.jpg"
+            alt=""
+            className="h-[20%] w-[20%] rounded-[50%] md:h-[30%] md:w-[30%]"
+          />
+          <p className=" text-md md:text-2xl whitespace-normal">Luffy</p>
+          <p className="text-xs md:text-sm">Meat & Crazy Fella </p>
+        </div>
+        <div className="flex justify-center items-center flex-col mt-4 mb-4 font-mono font-bold">
+          <img
+            src="https://i.pinimg.com/1200x/0e/37/c2/0e37c2887c7a300081fc01c139a8d066.jpg"
+            alt=""
+            className="h-[20%] w-[20%] rounded-[50%] md:h-[30%] md:w-[30%]"
+          />
+          <p className="text-md md:text-2xl"> Zoro</p>
+          <p className="text-xs md:text-sm"> Sword & Sleeping fella </p>
+        </div>
+        <div className="flex justify-center items-center flex-col mt-4 mb-4 font-mono font-bold">
+          <img
+            src="https://i.pinimg.com/736x/b8/dd/4c/b8dd4ce7aa461fc25baa766f0c1b50bb.jpg"
+            alt=""
+            className="h-[20%] w-[20%] rounded-[50%] md:h-[30%] md:w-[30%]"
+          />
+          <p className="text-md md:text-2xl">Sanji</p>
+          <p className="text-xs md:text-sm"> Womanizer & Cooking Fella </p>
+        </div>
+      </div>
+
+--Let's understand the Best Char Section
+      <div className="flex justify-evenly items-center flex-nowrap mt-8 mb-8 p-3 gap-4">
+this is our base class for that , in this we will have all best char posts, we are setting the flex-nowrap, the content will not go to next line
+
+-- Let's understand this
+
+        <div className="flex justify-center items-center flex-col mt-4 mb-4 font-mono font-bold">
+          <img
+            src="https://i.pinimg.com/736x/6f/b6/f9/6fb6f9bbb490773843c19fdb42d2bf6f.jpg"
+            alt=""
+            className="h-[20%] w-[20%] rounded-[50%] md:h-[30%] md:w-[30%]"
+          />
+          <p className=" text-md md:text-2xl whitespace-normal">Luffy</p>
+          <p className="text-xs md:text-sm">Meat & Crazy Fella </p>
+        </div>
+
+well it is obvious why we used the flex, also we wanted the in col so we used the flex-col 
+and font-mono , font-bold--> font-family , font-weight
+            className="h-[20%] w-[20%] rounded-[50%] md:h-[30%] md:w-[30%]"
+we have set the height & width to 20% at small screen then after md breakpoint we it to the 30%
+
+//Just Going to Eat 13:52

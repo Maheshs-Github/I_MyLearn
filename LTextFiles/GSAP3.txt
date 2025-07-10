@@ -286,3 +286,129 @@ T1.clear(); // Clean timeline, but can reuse it
 ⏩⏪ Controls the speed of the animation
 T1.timeScale(2); // 2x faster
 T1.timeScale(0.5); // 0.5x (slower)
+
+
+
+
+---- Let's understand one code , we are creating the text animation
+
+--HTML
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text Animation</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Itachi &nbsp; Uchiha</h1>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"
+      integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+
+--- CSS
+* {
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+body,
+html {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+h1 {
+  font-family: cursive;
+  /* background-color: #bf283b; */
+  overflow: hidden;
+  /* box-shadow: 2px 2px 2px 2px #bf283b; */
+}
+h1 span {
+  display: inline-block;
+  color: #bf283b;
+  font-size: 60px;
+  text-shadow: 2px 2px 8px #bf283b;
+}
+
+//We can't use GSAP on inline elements that is why we set it to the inline-block and then 
+
+
+--- JS
+let H1 = document.querySelector("h1");
+
+// console.log(H1);
+// console.log(H1.innerText);
+// console.log(h1.textContent);
+
+let HText = H1.innerText;
+console.log(HText);
+console.log(HText.split(""));
+let SplittedText = HText.split("");
+console.log("Len: ", SplittedText.length);
+let HLen = Math.ceil(SplittedText.length / 2);
+console.log("HLen: ", HLen);
+let Clutter = "";
+// let Clutter;
+let Indx = 0;
+// for (let Element of SplittedText) {
+//   // console.log(Element);
+//   // Clutter += "Yes1 ";
+//   Indx++;
+//   if (Indx <= HLen) {
+//     Clutter += `<span class="I1">${Element}</span>`;
+//   } else {
+//     Clutter += `<span class="I2">${Element}</span>`;
+//   }
+// }
+SplittedText.forEach((Element, Index) => {
+  // console.log(Element);
+  if (Index <= HLen) {
+    Clutter += `<span class="I1">${Element}</span>`;
+  } else {
+    Clutter += `<span class="I2">${Element}</span>`;
+  }
+});
+// console.log(Clutter);
+H1.innerHTML = Clutter;
+
+// gsap.from("h1 span", {
+//   y: 50,
+//   duration: 0.8,
+//   delay: 0.1,
+//   stagger: 0.2,
+//   // stagger: -0.2,
+//   opacity: 0,
+// });
+
+gsap.from("h1 .I1", {
+  y: 50,
+  duration: 0.8,
+  delay: 0.1,
+  stagger: 0.2,
+  // stagger: -0.2,
+  opacity: 0,
+});
+gsap.from("h1  .I2", {
+  y: 50,
+  duration: 0.8,
+  delay: 0.1,
+  stagger: -0.2,
+  // stagger: -0.2,
+  opacity: 0,
+});
+
+// GOing to EAt
+
+

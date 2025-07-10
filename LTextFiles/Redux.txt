@@ -82,6 +82,65 @@ Returns new state based on the action
 
 
 
+--- Let's see about the Pure functions and all 
+
+🔄 What is a Pure Function?
+A pure function is a function that:
+Always returns the same output for the same input.
+Has no side effects (doesn’t change external state, make API calls, modify DOM, etc).
+
+✅ Example of a Pure Function:
+function add(a, b) {
+  return a + b;
+}
+add(2, 3) will always return 5.
+It doesn’t touch anything outside itself — no logs, no network calls, no DOM manipulation.
+
+
+❌ Non-Pure Function (Impure)
+A non-pure function does one or more of the following:
+Changes a global or external variable.
+Depends on something that can change (like Date.now()).
+Performs side effects (logs, API calls, mutations, etc).
+
+❌ Example of an Impure Function:
+let total = 0;
+function addToTotal(value) {
+  total += value;  // modifies external state
+}
+Output depends on external state (total).
+Multiple calls can give different results.
+
+🧠 Why Redux Reducers Must Be Pure?
+In Redux, a reducer is a pure function because:
+It must predictably compute the next state.
+No side effects — makes it easy to debug, test, and use with tools like time-travel debugging.
+If reducers were impure, Redux couldn't reliably manage your app’s state.
+
+✅ Example Reducer:
+function counterReducer(state = 0, action) {
+  switch (action.type) {
+    case 'INCREMENT':
+      return state + 1;
+    case 'DECREMENT':
+      return state - 1;
+    default:
+      return state;
+  }
+}
+
+Pure: ✔️
+No API calls
+No randomness
+Doesn't mutate state
+
+So… Where do Side Effects Go in Redux?
+While reducers must be pure, side effects (like API calls) are handled by:
+Middleware like redux-thunk, redux-saga, etc.
+These tools let you keep logic that isn’t pure outside reducers but still in Redux flow.
+
+
+
 
   export const { addTodo, removeTodo } = todoSlice.actions;
 You're exporting those auto-generated action type, so that in your component you can do:
@@ -112,7 +171,7 @@ export const store = configureStore({
     Todo: todoReducer
   },
 });
-just configure the store and set the reducer from our slice as Todo, 
+just configure the store and set the reducer from our slice as Todo,
 we can set more reducers there
 So our global state will something like (i mean we will access state as )
 {
@@ -141,7 +200,7 @@ createRoot(document.getElementById("root")).render(
   </StrictMode>
 );
 
-And with Provider we are taking the store(i mean itr's staet, reducers etc) , that we just configure, so it is now globally avaliabel, just Context there we used to give value to some component then export it directly
+And with Provider we are taking the store(i mean it's state, reducers etc) , that we just configure, so it is now globally avaliabel, just Context there we used to give value to some component then export it directly
 
 
 

@@ -22,7 +22,7 @@ const Student = () => {
         Best One Piece Characters
       </h2>
       {/* <div className="flex justify-evenly items-center flex-nowrap mt-8 mb-8 p-3 gap-4 "> */}
-      <div className="flex justify-evenly items-center flex-wrap mt-8 mb-8 p-3 gap-4 md:flex-nowrap">
+      <div className="flex justify-evenly items-center flex-nowrap mt-8 mb-8 p-3 gap-4 md:flex-nowrap">
         <div className="flex justify-center items-center flex-col mt-4 mb-4 font-mono font-bold">
           <img
             src="https://i.pinimg.com/736x/6f/b6/f9/6fb6f9bbb490773843c19fdb42d2bf6f.jpg"
@@ -127,3 +127,5 @@ export default Student;
 // Maybe we can use flex-wrap on componets like Char & Arcs with that we can set them in single for small screens
 //let's make one component to take all data, u k with map method
 // exporting Student with Student1 element,   it is okay
+// Let's see with  find and replace shortcut, search one too
+//Let's practice JS interview question Coding ones too

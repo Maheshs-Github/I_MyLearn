@@ -5,9 +5,6 @@ const Student = () => {
   return (
     <div className="flex justify-center items-center flex-col mt-4 mb-4">
       <div className="flex justify-center items-center flex-col mt-4 mb-4">
-        {/* <p className="text-blue-500 text-3xl font-bold">
-          Hard Work No ShortCuts!
-        </p> */}
         <div className="w-[200px] h-4 border-b-6 border-yellow-400 mt-2 rounded-sm"></div>
       </div>
       {/* This is a Best Char Section */}
@@ -15,8 +12,7 @@ const Student = () => {
       <h2 className="text-[#EE4D57] text-3xl font-bold mt-[30px]">
         Best One Piece Characters
       </h2>
-      {/* <div className="flex justify-evenly items-center flex-nowrap mt-8 mb-8 p-3 gap-4 "> */}
-      <div className="flex justify-center items-center flex-wrap mt-8 mb-8 p-3 gap-[50px] md:gap-[150px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4  mt-8 mb-8 p-3 gap-[50px] gap-y-[20px] md:gap-[150px] md:gap-y-[70px]">
         {Chars.map((Data) => {
           return (
             <div className="flex justify-center items-center flex-col mt-4 mb-4 font-mono font-bold w-[250px] ">
@@ -40,10 +36,10 @@ const Student = () => {
       <h2 className="text-[#EE4D57] text-3xl  font-bold my-[30px] p-3">
         Best One Piece Arcs
       </h2>
-      <div className="flex justify-center items-center  mt-8 mb-8 flex-wrap  w-full p-3 gap-[50px] md:gap-[100px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4  mt-8 mb-8  p-3 gap-[50px] gap-y-[35px] md:gap-[100px] md:gap-y-[50px]">
         {Arcs.map((Data) => {
           return (
-            <div className="flex justify-start gap-2 items-center flex-col mt-4 mb-4 font-mono font-bold  w-[350px] ">
+            <div className="flex justify-start gap-2 items-center flex-col mt-4 mb-4 font-mono font-bold  w-fit max-w-[350px]">
               <img
                 src={Data.Img}
                 alt=""

@@ -8,6 +8,7 @@ const OTP_Screen = () => {
   // const [OTP, setOTP] = useState();
   const handleOnChange = (e, index) => {
     // console.log(e.target.value);
+    console.log("Inputs: ",Inputs.current)
     const value = e.target.value;
     // Throught the Event (e) we are taking values from Input field
     // const DValue = /^\d?$/.test(value);

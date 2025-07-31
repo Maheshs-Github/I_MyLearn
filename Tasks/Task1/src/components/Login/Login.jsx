@@ -51,7 +51,7 @@ const Login = ({ setScreen, getData }) => {
   return (
     <div>
       <div className={Styles.Container}>
-        <p>Login Form </p>
+        <p>Login Form khsfs </p>
         <input
           type="text "
           // name="n1"
@@ -69,6 +69,7 @@ const Login = ({ setScreen, getData }) => {
           // }}
           onChange={(e) => {
             setEmailVal(e.target.value);
+            // console.log(e);
             // handleNo(e);
           }}
           onBlur={(e) => {

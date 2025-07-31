@@ -1,0 +1,32 @@
+-Tasks (21 Jul)
+So 1st Let's first see about how did we used the reduce to calcualte the total of the amount
+let's see about the scrollbar, how we can achieve it Simply
+using type:text, number and using required, with yup , How we can do as such that we  can only enetr 10 digit no in a input, only number, 
+how we can convert any email String into lowercase those 2  ways
+
+
+
+//Let's see about the scrollbar thing that we were checking about 
+let's about our scrollbar code , u know that thing u were confuse about it, width that it was overflowing at some point , there is definetly something
+Also about the how we can have the Amount at last even in scroll
+How do we take the Isons from that File (Common)
+Also let's understand about the that our Rotes of Real Estate
+Let’s also check about VS Code for git about merging, what is mean by this and that , that push to , pull from all
+Let's check abaout the figma for dev as well 
+Let's see how the Footer gettng render on all pages at the end
+To we have to merge after the pull 
+
+
+Let's try to replicate that our Login and all flow
+Let's see about the Model Methods 
+userModel.methods.isPasswordMatched = async function (enteredPassword) 
+Let's understand about the store
+Also lets understand about the sending... from our refer form 
+Let's check about the Table thing we used for our scroll Problem
+Let’s write understanding of git With VS 
+Let's check about the 
+
+
+-------- //Creds--------
+maheshbuyer@gmail.com
+Mahesh@11

@@ -1,0 +1,1115 @@
+import React from "react";
+import { useForm } from "react-hook-form";
+// import axios from "axios";
+// import { toast } from "react-toastify";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup.object().shape({
+  // ✅ Name
+  Name: yup
+    .string()
+    .trim()
+    .required("Name is required")
+    .min(2, "Name must be at least 2 characters"),
+
+  // ✅ Email
+  Email: yup
+    .string()
+    .trim()
+    .required("Email is required")
+    .email("Must be a valid email address"),
+
+  // ✅ Phone
+  Phone: yup
+    .string()
+    .trim()
+    .required("Phone number is required")
+    .matches(/^[0-9]{10}$/, "Phone must be 10 digits"),
+
+  // ✅ Property Type
+  PType: yup.string().required("Property type is required"),
+
+  // ✅ Budget
+  Budget: yup
+    .string()
+    .trim()
+    .required("Budget is required")
+    .matches(/^[0-9]+$/, "Budget must be a number"),
+
+  // ✅ BHK Requirement
+  BHK: yup.string().required("BHK requirement is required"),
+
+  // ✅ Urgency Level
+  ULevel: yup.string().required("Urgency level is required"),
+
+  // ✅ Location
+  Location: yup.string().required("Location is required"),
+
+  // ✅ Notes (optional, but max limit)
+  Notes: yup.string().trim().max(500, "Notes must be under 500 characters"),
+
+  // ✅ Consent Checkbox
+  TCheck: yup.boolean().oneOf([true], "You must confirm the referral consent"),
+
+  // Email: yup.string().trim().required("Email is required"),
+  // Phone: yup.string().trim().required("Phone is required"),
+  // PType: yup.string().trim().required("PTYe is required"),
+  // Password: yup
+  //   .string()
+  //   .required("Password is required")
+  //   .min(8, "Password must be at least 8 characters")
+  //   .matches(/[A-Z]/, "Must include at least one uppercase letter")
+  //   .matches(/[a-z]/, "Must include at least one lowercase letter")
+  //   .matches(/[0-9]/, "Must include at least one number")
+  //   .matches(/[@$!%*?&]/, "Must include at least one special character"),
+});
+
+const ByRequirement = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  //Using axios method to send the dat to backend
+  const onSubmit = async (data) => {
+    console.log("Form Submitted ✅", data);
+    reset();
+    // try {
+    //   const Data1 = await axios.post("http://localhost:4000/Data", data);
+    //   console.log("data: ", Data1);
+    //   if (Data1.data.success) {
+    //     console.log("Data: ", Data1.data.Data);
+    //     // alert(Data1.data.message);
+    //     toast.success("Data Sent Successfully(S Toast)");
+    //     reset();
+    //   } else {
+    //     console.log("Error from Backend");
+    //     toast.error("There is been some Error (E Toast");
+    //   }
+    // } catch (err) {
+    //   console.log("There is been some error: ", err);
+    //   toast.error("There is been some Error (E Toast");
+    // }
+  };
+
+  return (
+    <div className="font-poppins bg-[#fff] rounded-md mt-2 text-RefForm-text-color">
+      <div className="w-[70%] p-6 ">
+        <div className=" flex flex-col gap-5">
+          <h1 className=" font-poppins text-2xl font-semibold ">
+            Refer with Requirement
+          </h1>
+          <div className="p-10">
+            <div>
+              {/* Section with input fields */}
+              <h3 className="text-xl font-semibold mb-4">
+                Referred Person Details
+              </h3>
+            </div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="grid grid-cols-2 gap-x-16 gap-y-8">
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="Name" className="font-medium">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    name="Name"
+                    placeholder="Enter Full Name"
+                    className="  rounded-md p-2 w-full bg-RefFormField-bg-color"
+                    {...register("Name")}
+                  />
+                  {errors.Name && (
+                    <p className="mt-1 text-red-600 ">{errors.Name.message}</p>
+                  )}
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="Email" className="font-medium">
+                    Email
+                  </label>
+                  <input
+                    type="text"
+                    name="Email"
+                    placeholder="Enter Email"
+                    className="  rounded-md p-2 w-full bg-RefFormField-bg-color"
+                    {...register("Email")}
+                  />
+                  {errors.Email && (
+                    <p className="mt-1 text-red-600 ">{errors.Email.message}</p>
+                  )}
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="Phone" className="font-medium">
+                    Phone Number
+                  </label>
+                  <input
+                    type="text"
+                    name="Phone"
+                    placeholder="Enter phone number"
+                    className="  rounded-md p-2 w-full bg-RefFormField-bg-color"
+                    {...register("Phone")}
+                  />
+                  {errors.Phone && (
+                    <p className="mt-1 text-red-600 ">{errors.Phone.message}</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Section with selection input fields */}
+              <h3 className="text-xl font-semibold mt-10 mb-4">Requirement</h3>
+              <div className="grid grid-cols-2 gap-x-16 gap-y-8">
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="PType" className="font-medium">
+                    Property Type
+                  </label>
+                  <select
+                    name="PType"
+                    id=""
+                    className=" rounded-md p-2 w-full bg-RefFormField-bg-color"
+                    {...register("PType")}
+                  >
+                    <option value="">Select property type</option>
+                    <option value="Villa">Villa</option>
+                    <option value="Luxury">Luxury</option>
+                    <option value="4BHK">4BHK</option>
+                  </select>
+                  {errors.PType && (
+                    <p className="mt-1 text-red-600 ">{errors.PType.message}</p>
+                  )}
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="Budget" className="font-medium">
+                    Budget Range
+                  </label>
+                  <input
+                    type="text"
+                    name="Budget"
+                    placeholder="Enter Budget Range"
+                    className="  rounded-md p-2 w-full bg-RefFormField-bg-color"
+                    {...register("Budget")}
+                  />
+                  {errors.Budget && (
+                    <p className="mt-1 text-red-600 ">
+                      {errors.Budget.message}
+                    </p>
+                  )}
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="BHK" className="font-medium">
+                    BHK Requirement
+                  </label>
+                  <select
+                    name="BHK"
+                    id=""
+                    className=" rounded-md p-2 w-full bg-RefFormField-bg-color"
+                    {...register("BHK")}
+                  >
+                    <option value="">Select bhk</option>
+                    <option value="Villa">Villa</option>
+                    <option value="Luxury">Luxury</option>
+                    <option value="4BHK">4BHK</option>
+                  </select>
+                  {errors.BHK && (
+                    <p className="mt-1 text-red-600 ">{errors.BHK.message}</p>
+                  )}
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="ULevel" className="font-medium">
+                    Urgency Level
+                  </label>
+                  <select
+                    name="ULevel"
+                    id=""
+                    className=" rounded-md p-2 w-full bg-RefFormField-bg-color"
+                    {...register("ULevel")}
+                  >
+                    <option value="">Select urgency level</option>
+                    <option value="Villa">Villa</option>
+                    <option value="Luxury">Luxury</option>
+                    <option value="4BHK">4BHK</option>
+                  </select>
+                  {errors.ULevel && (
+                    <p className="mt-1 text-red-600 ">
+                      {errors.ULevel.message}
+                    </p>
+                  )}
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="Location" className="font-medium">
+                    Location Interested In
+                  </label>
+                  <select
+                    name="Location"
+                    id=""
+                    className=" rounded-md p-2 w-full bg-RefFormField-bg-color"
+                    {...register("Location")}
+                  >
+                    <option value="">Select location</option>
+                    <option value="Villa">Villa</option>
+                    <option value="Luxury">Luxury</option>
+                    <option value="4BHK">4BHK</option>
+                  </select>
+                  {errors.Location && (
+                    <p className="mt-1 text-red-600 ">
+                      {errors.Location.message}
+                    </p>
+                  )}
+                </div>
+                {/* <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="Name" className="font-medium">
+                    Additional Notes
+                  </label>
+                  <input
+                    type="text"
+                    name="Name"
+                    placeholder="Enter property description"
+                    className="  rounded-lg p-2 w-full bg-RefFormField-bg-color h-[92px]"
+                    {...register("Name")}
+                  />
+                  {errors.Name && (
+                    <p className="mt-1 text-red-600 ">{errors.Name.message}</p>
+                  )}
+                </div> */}
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="Notes" className="font-medium">
+                    Additional Notes
+                  </label>
+                  <textarea
+                    id="Notes"
+                    placeholder="Enter property description"
+                    className="rounded-lg p-2 w-full bg-RefFormField-bg-color h-[100px] resize-none"
+                    {...register("Notes")}
+                  />
+                  {errors.Notes && (
+                    <p className="mt-1 text-red-600">{errors.Notes.message}</p>
+                  )}
+                </div>
+              </div>
+              <div className="flex flex-col gap-8 mt-6">
+                <div className="flex justify-start items-center gap-2">
+                  <input
+                    name="TCheck"
+                    type="checkbox"
+                    {...register("TCheck")}
+                  />
+
+                  <label
+                    htmlFor="TCheck"
+                    className=" text-[#4A4A4A] text-base whitespace-nowrap"
+                  >
+                    I confirm that my referral has consented to be contacted.
+                  </label>
+                  {errors.TCheck && (
+                    <p className="mt-1 text-red-600">{errors.TCheck.message}</p>
+                  )}
+                </div>
+                <div className="flex justify-end  ">
+                  <button className="bg-[#005E66]  text-white rounded-md text-xs p-2 ">
+                    Submit Requirement
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ByRequirement;
+
+// So never use margin to position element
+//also never use the width on a input field rather use w-full with a gap
+//let's convert this layout into flex , which is grid rn
+// also let's see the how button is align there
+//Let's see about the gap how it effects
+
+
+
+
+
+
+
+
+
+
+
+import React from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup.object().shape({
+  // ✅ Name
+  Name: yup
+    .string()
+    .trim()
+    .required("Name is required")
+    .min(2, "Name must be at least 2 characters"),
+
+  // ✅ Email
+  Email: yup
+    .string()
+    .trim()
+    .required("Email is required")
+    .email("Must be a valid email address"),
+
+  // ✅ Phone
+  Phone: yup
+    .string()
+    .trim()
+    .required("Phone number is required")
+    .matches(/^[0-9]{10}$/, "Phone must be 10 digits"),
+
+  // ✅ Property Type
+  PType: yup.string().required("Property type is required"),
+
+  // ✅ Budget
+  Budget: yup
+    .string()
+    .trim()
+    .required("Budget is required")
+    .matches(/^[0-9]+$/, "Budget must be a number"),
+
+  // ✅ BHK Requirement
+  BHK: yup.string().required("BHK requirement is required"),
+
+  // ✅ Urgency Level
+  ULevel: yup.string().required("Urgency level is required"),
+
+  // ✅ Location
+  Location: yup.string().required("Location is required"),
+
+  // ✅ Notes (optional, but max limit)
+  Notes: yup.string().trim().max(500, "Notes must be under 500 characters"),
+
+  // ✅ Consent Checkbox
+  TCheck: yup.boolean().oneOf([true], "You must confirm the referral consent"),
+});
+
+const ByRequirement = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  //Using axios method to send the dat to backend
+  const onSubmit = async (data) => {
+    console.log("Form Submitted ✅", data);
+    toast.success("Data Sent Successfully(S Toast)");
+
+    reset();
+    try {
+      // const Data1 = await axios.post("http://localhost:8000/api/v1/seller/referReq", data);
+      const Data1 = await axios.post("http://localhost:4000/Data", data);
+      console.log("data: ", Data1);
+      if (Data1.data.success) {
+        console.log("Data: ", Data1.data.Data);
+        // alert(Data1.data.message);
+        toast.success("Data Sent Successfully(S Toast)");
+        reset();
+      } else {
+        console.log("Error from Backend");
+        toast.error("There is been some Error (E Toast");
+      }
+    } catch (err) {
+      console.log("There is been some error: ", err);
+      toast.error("There is been some Error (E Toast");
+    }
+  };
+
+  return (
+    <div className="font-poppins bg-[#fff] rounded-md mt-2 text-RefForm-text-color">
+      <div className="w-[70%] p-6 ">
+        <div className=" flex flex-col gap-5">
+          <h1 className=" font-poppins text-2xl font-semibold ">
+            Refer with Requirement
+          </h1>
+          <div className="p-10">
+            <div>
+              {/* Section with input fields */}
+              <h3 className="text-xl font-semibold mb-4">
+                Referred Person Details
+              </h3>
+            </div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="grid grid-cols-2 gap-x-16 gap-y-8">
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="Name" className="font-medium">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    name="Name"
+                    placeholder="Enter Full Name"
+                    className="  rounded-md p-2 w-full bg-RefFormField-bg-color"
+                    {...register("Name")}
+                  />
+                  {errors.Name && (
+                    <p className="mt-1 text-red-600 ">{errors.Name.message}</p>
+                  )}
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="Email" className="font-medium">
+                    Email
+                  </label>
+                  <input
+                    type="text"
+                    name="Email"
+                    placeholder="Enter Email"
+                    className="  rounded-md p-2 w-full bg-RefFormField-bg-color"
+                    {...register("Email")}
+                  />
+                  {errors.Email && (
+                    <p className="mt-1 text-red-600 ">{errors.Email.message}</p>
+                  )}
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="Phone" className="font-medium">
+                    Phone Number
+                  </label>
+                  <input
+                    type="text"
+                    name="Phone"
+                    placeholder="Enter phone number"
+                    className="  rounded-md p-2 w-full bg-RefFormField-bg-color"
+                    {...register("Phone")}
+                  />
+                  {errors.Phone && (
+                    <p className="mt-1 text-red-600 ">{errors.Phone.message}</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Section with selection input fields */}
+              <h3 className="text-xl font-semibold mt-10 mb-4">Requirement</h3>
+              <div className="grid grid-cols-2 gap-x-16 gap-y-8">
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="PType" className="font-medium">
+                    Property Type
+                  </label>
+                  <select
+                    name="PType"
+                    id=""
+                    className=" rounded-md p-2 w-full bg-RefFormField-bg-color"
+                    {...register("PType")}
+                  >
+                    <option value="">Select property type</option>
+                    <option value="Villa">Villa</option>
+                    <option value="Luxury">Luxury</option>
+                    <option value="4BHK">4BHK</option>
+                  </select>
+                  {errors.PType && (
+                    <p className="mt-1 text-red-600 ">{errors.PType.message}</p>
+                  )}
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="Budget" className="font-medium">
+                    Budget Range
+                  </label>
+                  <input
+                    type="text"
+                    name="Budget"
+                    placeholder="Enter Budget Range"
+                    className="  rounded-md p-2 w-full bg-RefFormField-bg-color"
+                    {...register("Budget")}
+                  />
+                  {errors.Budget && (
+                    <p className="mt-1 text-red-600 ">
+                      {errors.Budget.message}
+                    </p>
+                  )}
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="BHK" className="font-medium">
+                    BHK Requirement
+                  </label>
+                  <select
+                    name="BHK"
+                    id=""
+                    className=" rounded-md p-2 w-full bg-RefFormField-bg-color"
+                    {...register("BHK")}
+                  >
+                    <option value="">Select bhk</option>
+                    <option value="Villa">Villa</option>
+                    <option value="Luxury">Luxury</option>
+                    <option value="4BHK">4BHK</option>
+                  </select>
+                  {errors.BHK && (
+                    <p className="mt-1 text-red-600 ">{errors.BHK.message}</p>
+                  )}
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="ULevel" className="font-medium">
+                    Urgency Level
+                  </label>
+                  <select
+                    name="ULevel"
+                    id=""
+                    className=" rounded-md p-2 w-full bg-RefFormField-bg-color"
+                    {...register("ULevel")}
+                  >
+                    <option value="">Select urgency level</option>
+                    <option value="Villa">Villa</option>
+                    <option value="Luxury">Luxury</option>
+                    <option value="4BHK">4BHK</option>
+                  </select>
+                  {errors.ULevel && (
+                    <p className="mt-1 text-red-600 ">
+                      {errors.ULevel.message}
+                    </p>
+                  )}
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="Location" className="font-medium">
+                    Location Interested In
+                  </label>
+                  <select
+                    name="Location"
+                    id=""
+                    className=" rounded-md p-2 w-full bg-RefFormField-bg-color"
+                    {...register("Location")}
+                  >
+                    <option value="">Select location</option>
+                    <option value="Villa">Villa</option>
+                    <option value="Luxury">Luxury</option>
+                    <option value="4BHK">4BHK</option>
+                  </select>
+                  {errors.Location && (
+                    <p className="mt-1 text-red-600 ">
+                      {errors.Location.message}
+                    </p>
+                  )}
+                </div>
+                {/* <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="Name" className="font-medium">
+                    Additional Notes
+                  </label>
+                  <input
+                    type="text"
+                    name="Name"
+                    placeholder="Enter property description"
+                    className="  rounded-lg p-2 w-full bg-RefFormField-bg-color h-[92px]"
+                    {...register("Name")}
+                  />
+                  {errors.Name && (
+                    <p className="mt-1 text-red-600 ">{errors.Name.message}</p>
+                  )}
+                </div> */}
+                <div className="flex flex-col items-start gap-2">
+                  <label htmlFor="Notes" className="font-medium">
+                    Additional Notes
+                  </label>
+                  <textarea
+                    id="Notes"
+                    placeholder="Enter property description"
+                    className="rounded-lg p-2 w-full bg-RefFormField-bg-color h-[100px] resize-none"
+                    {...register("Notes")}
+                  />
+                  {errors.Notes && (
+                    <p className="mt-1 text-red-600">{errors.Notes.message}</p>
+                  )}
+                </div>
+              </div>
+              {/* <div className="flex flex-col gap-8 mt-6">
+                <div className="flex justify-start items-center gap-2">
+                  <input
+                    name="TCheck"
+                    type="checkbox"
+                    {...register("TCheck")}
+                  />
+
+                  <label
+                    htmlFor="TCheck"
+                    className=" text-[#4A4A4A] text-base whitespace-nowrap block"
+                  >
+                    I confirm that my referral has consented to be contacted.
+                  </label>
+
+                </div>
+                <div className="flex justify-end  ">
+                  <button className="bg-[#005E66]  text-white rounded-md text-md p-3 px-5 ">
+                    Submit Requirement
+                  </button>
+                </div>
+              </div> */}
+              <div className="flex flex-col gap-8 mt-6">
+                {/* ✅ Wrap checkbox and label in a flex-row */}
+                <div className="flex flex-col items-start gap-1">
+                  <div className="flex items-start gap-2">
+                    <input
+                      id="TCheck"
+                      name="TCheck"
+                      type="checkbox"
+                      {...register("TCheck")}
+                    />
+                    <label
+                      htmlFor="TCheck"
+                      className="text-[#4A4A4A] text-base whitespace-nowrap"
+                    >
+                      I confirm that my referral has consented to be contacted.
+                    </label>
+                  </div>
+
+                  {/* ✅ Error below checkbox + label */}
+                  {errors.TCheck && (
+                    <p className="text-red-600 text-sm">
+                      {errors.TCheck.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* ✅ Submit Button */}
+                <div className="flex justify-end">
+                  <button className="bg-[#005E66] text-white rounded-md text-md p-3 px-5">
+                    Submit Requirement
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ByRequirement;
+
+// So never use margin to position element
+//also never use the width on a input field rather use w-full with a gap
+//let's convert this layout into flex , which is grid rn
+// also let's see the how button is align there
+//Let's see about the gap how it effects
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import * as yup from "yup";
+
+
+const RefValSchema = yup.object().shape({
+  // ✅ Name
+  Name: yup
+    .string()
+    .trim()
+    .required("Name is required")
+    .min(2, "Name must be at least 2 characters"),
+
+  // ✅ Email
+  Email: yup
+    .string()
+    .trim()
+    .required("Email is required")
+    .email("Must be a valid email address"),
+
+  // ✅ Phone
+  Phone: yup
+    .string()
+    .trim()
+    .required("Phone number is required")
+    .matches(/^[0-9]{10}$/, "Phone must be 10 digits"),
+
+  // ✅ Property Type
+  PType: yup.string().required("Property type is required"),
+
+  // ✅ Budget
+  Budget: yup
+    .string()
+    .trim()
+    .required("Budget is required")
+    .matches(/^[0-9]+$/, "Budget must be a number"),
+
+  // ✅ BHK Requirement
+  BHK: yup.string().required("BHK requirement is required"),
+
+  // ✅ Urgency Level
+  ULevel: yup.string().required("Urgency level is required"),
+
+  // ✅ Location
+  Location: yup.string().required("Location is required"), 
+
+  // ✅ Notes (optional, but max limit)
+  Notes: yup.string().trim().max(500, "Notes must be under 500 characters"),
+
+  // ✅ Consent Checkbox
+  TCheck: yup.boolean().oneOf([true], "You must confirm the referral consent"),
+});
+
+export {RefValSchema};
+
+
+
+
+
+
+// import React from "react";
+// import { useForm } from "react-hook-form";
+// import axios from "axios";
+// import { toast } from "react-hot-toast";
+// import { yupResolver } from "@hookform/resolvers/yup";
+// import { RefValSchema } from "../data/RefferalValidations";
+// import { useSelector } from "react-redux";
+
+// const ByRequirement = () => {
+//   //
+//   // useform hook declaration , also adding the resolver which we have imported
+//   const {
+//     register,
+//     handleSubmit,
+//     reset,
+//     formState: { errors },
+//   } = useForm({
+//     resolver: yupResolver(RefValSchema),
+//   });
+
+//   const token = useSelector((state) => state.auth.token);
+//   console.log("token ", token);
+
+//   //
+//   //onSubmit collecting the data with the data(obj) and we ar sending to backend route thorugh axios, we are also using the toast for success and error msg
+//   const onSubmit = async (data) => {
+//     console.log("Hello In Submit");
+//     console.log("Form Submitted ✅", data);
+
+//     try {
+//       const response = await axios.post(
+//         "http://localhost:8000/api/v1/seller/referReq",
+//         // "http://localhost:4000/Data",
+//         data,
+//         {
+//           headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${token}`,
+//           },
+//         }
+//       );
+
+//       console.log("API Response: ", response);
+//       if (response.status === 200 || response.status === 201) {
+//         console.log("Data: ", response.data);
+//         toast.success("Data Sent Successfully");
+//         reset(); // Reset form only after successful submission
+//       } else {
+//         console.log("Error from Backend");
+//         toast.error("Error from Backend");
+//       }
+//     } catch (err) {
+//       console.log("There has been some error: ", err);
+//       console.log("Error response: ", err.response);
+
+//       // Better error handling
+//       if (err.response) {
+//         // Server responded with error status
+//         const errorMessage =
+//           err.response.data?.message || `Server Error: ${err.response.status}`;
+//         toast.error(errorMessage);
+//         console.log("Error data:", err.response.data);
+//       } else if (err.request) {
+//         // Request was made but no response received
+//         toast.error("No response from server. Please check your connection.");
+//         console.log("No response received:", err.request);
+//       } else {
+//         // Something else happened
+//         toast.error("There has been some Error in operation");
+//         console.log("Error setting up request:", err.message);
+//       }
+//     }
+//   };
+
+//   return (
+//     <div className="font-poppins bg-[#fff] rounded-md mt-2 text-text-color">
+//       <div className=" w-[90%] xl:w-[75%] lg:w-[90%] md:w-[70%] sm:w-[75%] md:p-6  ">
+//         <div className=" flex flex-col gap-5">
+//           <h1 className=" font-poppins text-2xl font-semibold ">
+//             Refer with Requirement
+//           </h1>
+//           <div className="sm:p-10 p-1">
+//             <div>
+//               {/* Section with input fields */}
+//               <h3 className="text-xl font-semibold mb-4">
+//                 Referred Person Details
+//               </h3>
+//             </div>
+//             <form onSubmit={handleSubmit(onSubmit)}>
+//               <div className="grid sm:grid-cols-1 lg:grid-cols-2 lg:gap-x-8 xl:gap-x-16 gap-x-16 gap-y-8">
+//                 <div className="flex flex-col items-start gap-2">
+//                   <label htmlFor="fullName" className="font-medium">
+//                     Full Name
+//                   </label>
+//                   <input
+//                     type="text"
+//                     id="fullName"
+//                     name="fullName"
+//                     placeholder="Enter Full Name"
+//                     className="  rounded-md p-2 w-full bg-RefFormField-bg-color"
+//                     {...register("fullName")}
+//                   />
+//                   {errors.fullName && (
+//                     <p className="mt-1 text-red-600 ">
+//                       {errors.fullName.message}
+//                     </p>
+//                   )}
+//                 </div>
+//                 <div className="flex flex-col items-start gap-2">
+//                   <label htmlFor="email" className="font-medium">
+//                     Email
+//                   </label>
+//                   <input
+//                     type="email"
+//                     id="email"
+//                     name="email"
+//                     placeholder="Enter email"
+//                     className="  rounded-md p-2 w-full bg-RefFormField-bg-color"
+//                     {...register("email")}
+//                   />
+//                   {errors.email && (
+//                     <p className="mt-1 text-red-600 ">{errors.email.message}</p>
+//                   )}
+//                 </div>
+//                 <div className="flex flex-col items-start gap-2">
+//                   <label htmlFor="phoneNumber" className="font-medium">
+//                     Phone Number
+//                   </label>
+//                   <input
+//                     type="tel"
+//                     id="phoneNumber"
+//                     name="phoneNumber"
+//                     placeholder="Enter phone number"
+//                     className="  rounded-md p-2 w-full bg-RefFormField-bg-color"
+//                     {...register("phoneNumber")}
+//                   />
+//                   {errors.phoneNumber && (
+//                     <p className="mt-1 text-red-600 ">
+//                       {errors.phoneNumber.message}
+//                     </p>
+//                   )}
+//                 </div>
+//               </div>
+
+//               {/* Section with selection input fields */}
+//               <h3 className="text-xl font-semibold mt-10 mb-4">Requirement</h3>
+//               {/* <div className="grid grid-cols-2 gap-x-16 gap-y-8"> */}
+//               <div className="grid sm:grid-cols-1 lg:grid-cols-2 lg:gap-x-8 xl:gap-x-16 gap-x-16 gap-y-8">
+//                 <div className="flex flex-col items-start gap-2">
+//                   <label htmlFor="property_type" className="font-medium">
+//                     Property Type
+//                   </label>
+//                   <select
+//                     name="property_type"
+//                     id="property_type"
+//                     className=" rounded-md p-2 w-full bg-RefFormField-bg-color"
+//                     {...register("property_type")}
+//                   >
+//                     <option value="">Select property type</option>
+//                     <option value="Apartment">Apartment</option>
+//                     <option value="Villa">Villa</option>
+//                     <option value="House">House</option>
+//                     <option value="Penthouse">Penthouse</option>
+//                     <option value="Studio">Studio</option>
+//                   </select>
+//                   {errors.property_type && (
+//                     <p className="mt-1 text-red-600 ">
+//                       {errors.property_type.message}
+//                     </p>
+//                   )}
+//                 </div>
+//                 <div className="flex flex-col items-start gap-2">
+//                   <label htmlFor="budget_range" className="font-medium">
+//                     Budget Range
+//                   </label>
+//                   <input
+//                     type="text"
+//                     id="budget_range"
+//                     name="budget_range"
+//                     placeholder="Enter Budget Range (e.g., 10L - 20L)"
+//                     className="  rounded-md p-2 w-full bg-RefFormField-bg-color"
+//                     {...register("budget_range")}
+//                   />
+//                   {errors.budget_range && (
+//                     <p className="mt-1 text-red-600 ">
+//                       {errors.budget_range.message}
+//                     </p>
+//                   )}
+//                 </div>
+//                 <div className="flex flex-col items-start gap-2">
+//                   <label htmlFor="bhk_requirement" className="font-medium">
+//                     BHK Requirement
+//                   </label>
+//                   <select
+//                     name="bhk_requirement"
+//                     id="bhk_requirement"
+//                     className=" rounded-md p-2 w-full bg-RefFormField-bg-color"
+//                     {...register("bhk_requirement")}
+//                   >
+//                     <option value="">Select BHK</option>
+//                     <option value="1BHK">1BHK</option>
+//                     <option value="2BHK">2BHK</option>
+//                     <option value="3BHK">3BHK</option>
+//                     <option value="4BHK">4BHK</option>
+//                     <option value="5BHK">5BHK</option>
+//                     <option value="6BHK+">6BHK+</option>
+//                   </select>
+//                   {errors.bhk_requirement && (
+//                     <p className="mt-1 text-red-600 ">
+//                       {errors.bhk_requirement.message}
+//                     </p>
+//                   )}
+//                 </div>
+//                 <div className="flex flex-col items-start gap-2">
+//                   <label htmlFor="urgency_level" className="font-medium">
+//                     Urgency Level
+//                   </label>
+//                   <select
+//                     name="urgency_level"
+//                     id="urgency_level"
+//                     className=" rounded-md p-2 w-full bg-RefFormField-bg-color"
+//                     {...register("urgency_level")}
+//                   >
+//                     <option value="">Select urgency level</option>
+//                     <option value="Low">Low</option>
+//                     <option value="Medium">Medium</option>
+//                     <option value="High">High</option>
+//                     <option value="Urgent">Urgent</option>
+//                   </select>
+//                   {errors.urgency_level && (
+//                     <p className="mt-1 text-red-600 ">
+//                       {errors.urgency_level.message}
+//                     </p>
+//                   )}
+//                 </div>
+//                 <div className="flex flex-col items-start gap-2">
+//                   <label
+//                     htmlFor="location_interested_in"
+//                     className="font-medium"
+//                   >
+//                     Location Interested In
+//                   </label>
+//                   <select
+//                     name="location_interested_in"
+//                     id="location_interested_in"
+//                     className=" rounded-md p-2 w-full bg-RefFormField-bg-color"
+//                     {...register("location_interested_in")}
+//                   >
+//                     <option value="">Select location</option>
+//                     <option value="Mumbai">Mumbai</option>
+//                     <option value="Delhi">Delhi</option>
+//                     <option value="Bangalore">Bangalore</option>
+//                     <option value="Chennai">Chennai</option>
+//                     <option value="Hyderabad">Hyderabad</option>
+//                     <option value="Pune">Pune</option>
+//                     <option value="Kolkata">Kolkata</option>
+//                     <option value="Ahmedabad">Ahmedabad</option>
+//                   </select>
+//                   {errors.location_interested_in && (
+//                     <p className="mt-1 text-red-600 ">
+//                       {errors.location_interested_in.message}
+//                     </p>
+//                   )}
+//                 </div>
+
+//                 <div className="flex flex-col items-start gap-2">
+//                   <label htmlFor="additional_notes" className="font-medium">
+//                     Additional Notes
+//                   </label>
+//                   <textarea
+//                     id="additional_notes"
+//                     name="additional_notes"
+//                     placeholder="Enter property description, special requirements, etc."
+//                     className="rounded-lg p-2 w-full bg-RefFormField-bg-color h-[100px] resize-none"
+//                     {...register("additional_notes")}
+//                   />
+//                   {errors.additional_notes && (
+//                     <p className="mt-1 text-red-600">
+//                       {errors.additional_notes.message}
+//                     </p>
+//                   )}
+//                 </div>
+//               </div>
+
+//               <div className="flex flex-col gap-8 mt-6">
+//                 {/* ✅ Wrap checkbox and label in a flex-row */}
+//                 <div className="flex flex-col items-start gap-1">
+//                   <div className="flex items-center gap-2">
+//                     <input
+//                       id="TCheck"
+//                       name="TCheck"
+//                       type="checkbox"
+//                       className="font-bold"
+//                       {...register("TCheck")}
+//                     />
+//                     <label
+//                       htmlFor="TCheck"
+//                       className="lg:text-base whitespace-nowrap md:text-sm text-xs"
+//                     >
+//                       I confirm that my referral has consented to be contacted.
+//                     </label>
+//                   </div>
+
+//                   {/* ✅ Error below checkbox + label */}
+//                   {errors.TCheck && (
+//                     <p className="text-red-600 text-sm">
+//                       {errors.TCheck.message}
+//                     </p>
+//                   )}
+//                 </div>
+
+//                 {/* ✅ Submit Button */}
+//                 <div className="flex justify-end">
+//                   <button
+//                     type="submit"
+//                     className="bg-[#005E66] text-white rounded-md md:text-base lg:text-lg lg:py-3 py-2  px-5 hover:bg-[#004d54] transition-colors duration-200"
+//                   >
+//                     Submit Requirement
+//                   </button>
+//                 </div>
+//               </div>
+//             </form>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ByRequirement;

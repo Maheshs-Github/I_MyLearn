@@ -1,0 +1,684 @@
+
+---- Let's see about something
+
+1. Functional update
+
+setFormData((prev) => ({
+  ...prev,
+  [name]: value,
+}));
+
+2. Direct object update
+
+setFormData({ 
+  ...formData, 
+  [name]: value 
+});
+
+✅ Key Difference:
+Feature	Functional Form (prev => ...)	Direct Form { ...formData }
+Safe with async updates?	✅ Yes — gets the latest state	❌ Risky — may use stale state
+Recommended when?	When updates depend on previous state (like in form updates, counters)	When you're sure state is not stale
+Re-renders?	Same	Same
+Readability	Slightly more complex	Simpler
+
+🧠 Why it matters:
+React batches state updates, so if you're doing multiple updates quickly or inside useEffect, setTimeout, or event handlers, the second one might miss changes because formData could be outdated.
+
+📝 Conclusion:
+Always use the functional form:
+setFormData((prev) => ({
+  ...prev,
+  [name]: value,
+}));
+✅ It's safer, especially in dynamic forms or when the state depends on previous state values.
+
+
+
+
+
+--- we discuss about the different ways we set the value from the input field to the state
+  const handleInput = (e) => {
+
+    firstly we can use as e.target.name or simply we can destruct those as well
+    // setFormData({ ...formData, [e.target.name]: e.target.value });
+    // we can also take the values separately
+    // console.log("Event:", e);
+    const { name, value } = e.target;
+
+    different ways to write the values with the implicit, explicit and direct update
+    // setFormData({ ...formData, [name]: value });
+    // setFormData((Data) => {
+    //   return { ...Data, [name]: value };
+    // });
+    setFormData((Data) => ({ ...Data, [name]: value }));
+  };
+
+
+
+
+
+
+  --- Let's see about something
+
+  ✅ Simple Understanding Recap:
+                <a href="/terms-condition" target="_blank" rel="noopener noreferrer">
+
+Attribute	Meaning
+target="_blank"	Opens the link in a new tab
+rel="noopener"	Prevents the new tab from controlling the old tab via window.opener
+rel="noreferrer"	Prevents sending Referer header (privacy)
+
+
+
+🔐 These protect your current page from the new one.
+But they don’t block access to login-protected content.
+
+🧠 Your doubt:
+"My Terms and Conditions page also shows I'm logged in. I can still access protected routes. Why?"
+
+🔍 Answer:
+That's expected and correct behavior — here’s why:
+
+✅ 1. Login session is shared across tabs
+Your login is stored in cookies, localStorage, or sessionStorage.
+So when you open /terms-condition in a new tab, the browser automatically includes your login token.
+If /terms-condition is part of your same domain (e.g., myapp.com/terms-condition), then yes — it will show you're logged in.
+
+✅ 2. rel="noopener noreferrer" does not block login access
+It prevents:	It does NOT prevent:
+The new tab accessing the previous window via JS (window.opener)	Your browser sharing cookies/session tokens
+Security risks like tab hijacking	Pages from loading logged-in content if the user is already authenticated
+
+
+
+
+
+
+--- Let's see about something
+
+🔐 1. What is happening overall?
+You're building a form (e.g., referral form), but it's only accessible to authenticated users.
+To make that happen, you're:
+
+Authenticating users
+Storing tokens in Redux
+Using the token in API calls
+Protecting routes so unauthorized users can’t access certain components
+
+
+
+
+--- Let's see  login UI Here then
+
+import React, { useState } from "react";
+import Icon from "../../common/Icons";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginSchema } from "../../common/validation/yup/registration";
+import toast from "react-hot-toast";
+import axios from "axios";
+import BASE_URL from "../../../utils/Base_url";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/slices/authSlice";
+
+const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(loginSchema),
+  });
+
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.post(`${BASE_URL}auth/login`, data);
+      const { token, user } = res.data;
+      const { role } = user;
+
+      dispatch(login({ token, user, role }));
+
+      toast.success("Login successful!");
+
+      //role = seller,buyer,admin,super_admin,sales_executive,sales_head,super_admin,accountant,legal_team,approver
+      switch (role) {
+        case "buyer":
+          navigate("/buyer");
+          break;
+        case "seller":
+          navigate("/seller");
+          break;
+        case "admin":
+          navigate("/admin");
+          break;
+        case "sales_executive":
+          navigate("/sales-executive");
+          break;
+        case "sales_head":
+          navigate("/sales-head");
+          break;
+        case "super_admin":
+          navigate("/super-admin");
+          break;
+        case "accountant":
+          navigate("/accountant");
+          break;
+        case "legal_team":
+          navigate("/legal-team");
+          break;
+        default:
+          navigate("/");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error(err?.response?.data?.message || "Login failed");
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen px-4 py-10">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="bg-white shadow-sm space-y-4 font-poppins px-6 py-4 w-full max-w-md"
+      >
+        <h2 className="text-center text-text-color text-base">
+          Let's build something great
+        </h2>
+
+        <div className="flex flex-col">
+          <label htmlFor="email" className="mb-1 font-medium">
+            E-mail
+          </label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Enter your E-mail"
+            {...register("email")}
+            className="w-full rounded border p-3 text-sm outline-none"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+          )}
+        </div>
+
+        <div className="flex flex-col">
+          <label htmlFor="password" className="mb-1 font-medium">
+            Password
+          </label>
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              placeholder="Enter your password"
+              {...register("password")}
+              className={`w-full rounded border p-3 text-sm outline-none pr-10 ${
+                showPassword ? "border-login-input-border-color" : ""
+              } `}
+            />
+            <span
+              className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <Icon.EyeOff size={24} />
+              ) : (
+                <Icon.Eye size={24} />
+              )}
+            </span>
+          </div>
+          {errors.password && (
+            <p className="text-red-500 text-xs mt-1">
+              {errors.password.message}
+            </p>
+          )}
+        </div>
+
+        <div className="text-sm text-end text-primary-color cursor-pointer">
+          <Link to={"/forgot-password"}>Forgot Password?</Link>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <button
+            type="submit"
+            className="bg-primary-color text-white rounded p-3"
+          >
+            Login
+          </button>
+          <button
+            type="button"
+            className="flex items-center justify-center gap-2 rounded p-3 border"
+          >
+            <span>
+              <Icon.Google size={24} />
+            </span>
+            Continue with Google
+          </button>
+        </div>
+
+        <p className="text-sm text-center">
+          Don't have an account?
+          <Link to={"/register"} className="text-primary-color px-1">
+            Sign Up
+          </Link>
+        </p>
+      </form>
+    </div>
+  );
+};
+
+export default Login;
+
+
+--- So Let's start from the Form, well we are using the React Hook Form , 
+Well at login  we have the email and password field 
+        <div className="flex flex-col">
+          <label htmlFor="email" className="mb-1 font-medium">
+            E-mail
+          </label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Enter your E-mail"
+            {...register("email")}
+            className="w-full rounded border p-3 text-sm outline-none"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+          )}
+        </div>
+        Well we have the Email Field it is just the Same
+
+In a Password Field we are having the having the Eye Icon Chnage with visible of the input 
+        <div className="flex flex-col">
+          <label htmlFor="password" className="mb-1 font-medium">
+            Password
+          </label>
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              placeholder="Enter your password"
+              {...register("password")}
+              className={`w-full rounded border p-3 text-sm outline-none pr-10 ${
+                showPassword ? "border-login-input-border-color" : ""
+              } `}
+            />
+            <span
+              className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <Icon.EyeOff size={24} />
+              ) : (
+                <Icon.Eye size={24} />
+              )}
+            </span>
+          </div>
+          {errors.password && (
+            <p className="text-red-500 text-xs mt-1">
+              {errors.password.message}
+            </p>
+          )}
+        </div>
+        
+
+
+🔐 Password Input Field with Show/Hide Toggle
+
+🔁 1. showPassword State Controls Visibility
+type={showPassword ? "text" : "password"}
+If showPassword is true, the input type becomes "text" so the password is visible.
+If false, it's "password" and characters are masked.
+
+👁️ 2. Eye Icon Toggle Logic
+<span onClick={() => setShowPassword(!showPassword)}>
+  {showPassword ? <Icon.EyeOff size={24} /> : <Icon.Eye size={24} />}
+</span>
+This lets you toggle visibility by updating the showPassword state.
+Icon switches accordingly: 👁️ → 🙈
+
+📍 3. Absolute Positioning for Eye Icon
+absolute right-3 top-1/2 -translate-y-1/2
+Puts the icon inside the input field, aligned to the right and vertically centered.
+Common trick to overlay UI controls in an input.
+
+🧼 4. Input Styling & Validation
+className={`w-full rounded border p-3 text-sm outline-none pr-10 ${
+  showPassword ? "border-login-input-border-color" : ""
+}`}
+Adds padding (pr-10) so the text doesn’t collide with the icon.
+Conditionally applies an extra border color if showPassword is true.
+
+
+
+🔄 navigate() (from useNavigate)
+Used in JavaScript (inside code/functions)
+Think of it as a programmatic redirect.
+You use it after an action happens, like form submission, login, or a button click, where you want to redirect without user clicking a link.
+Example:
+navigate("/dashboard");
+This will redirect the user to /dashboard immediately when the function is called.
+
+🔗 <Link to="/route">
+Used in JSX (inside the return/render part)
+It renders a link like an <a> tag, and when the user clicks on it, it navigates to the path.
+Prevents full page reloads (like SPA behavior), and it's SEO-friendly.
+Example:
+<Link to="/dashboard">Go to Dashboard</Link>
+User clicks, then it navigates.
+
+✅ Summary:
+Feature	<Link>	navigate()
+Use case	Static navigation via UI click	Dynamic/programmatic navigation
+Where to use	JSX/HTML-like code	
+
+
+--Base on the role we will navigate to specifuc route
+      switch (role) {
+        case "buyer":
+          navigate("/buyer");
+          break;
+        case "seller":
+          navigate("/seller");
+
+
+--- when we submit the valid data , we will sent it to the backend and from the response, we will take the token and user and from user we will destruct the role which we will used for the role, later we navigate base on that , Also we dispatch the data throught the action login , in a store , we will take this data from it's action as action.payload, also for success toast we set the text with thw text comming from backed, if there is that msg and if success, success one 
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.post(`${BASE_URL}auth/login`, data);
+      const { token, user } = res.data;
+      const { role } = user;
+
+      dispatch(login({ token, user, role }));
+
+      // toast.success("Login successful!");
+      toast.success(res.data.message)
+
+--- Let's see about the backend logic to accept and validate the data sent throught the frontend 
+export const login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    // console.log("emreqq ", req.body);
+
+    if (!email || !password) {
+      return res.status(400).json({
+        message: "All fields are required",
+      });
+    }
+
+    const user =
+      (await Buyer.findOne({ email })) || (await Seller.findOne({ email }));
+
+    // console.log("user : ", user);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+        success: false,
+        error: true,
+      });
+    }
+
+    const isPasswordMatched = await user.isPasswordMatched(password);
+
+    if (!isPasswordMatched) {
+      return res.status(401).json({
+        message: "Invalid credentials",
+        success: false,
+        error: true,
+      });
+    }
+    const userUrl = await awsService.getSignedSingleUrl(user.userAvatar);
+    // console.log("userUrl : ", userUrl);
+
+    //remove sensitive feilds
+    const {
+      fullName,
+      email: userEmail,
+      phoneNumber,
+      userAvatar,
+      role: userRole,
+      sub_role,
+    } = user;
+
+    const safeUser = {
+      fullName,
+      email: userEmail,
+      phoneNumber,
+      userAvatar: userUrl,
+      role: userRole,
+      sub_role,
+    };
+
+    const accessToken = generateToken(user._id);
+    const encryptedToken = encryptData(accessToken);
+    // console.log("safedUser : ", safeUser);
+
+    return res.status(200).json({
+      message: "Login successful",
+      role: user.role,
+      user: safeUser,
+      token: encryptedToken,
+      success: true,
+      error: false,
+    });
+  } catch (error) {
+    console.log("error", error);
+    return res.status(500).json({
+      message: `Error while login ${error}`,
+      success: false,
+    });
+  }
+};
+
+
+
+
+
+✅ Summary of What This Function Does
+This login controller function handles login requests from both buyers and sellers, validates their credentials, and returns only safe, non-sensitive data with a token.
+
+🧩 Step-by-Step Breakdown
+1. Input Check
+const { email, password } = req.body;
+if (!email || !password) {
+  return res.status(400).json({ message: "All fields are required" });
+}
+It extracts email and password from the request.
+If either is missing, it returns a 400 (Bad Request).
+
+2. User Lookup
+const user = await Buyer.findOne({ email }) || await Seller.findOne({ email });
+It tries to find the user in the Buyer collection.
+If not found, it tries Seller.
+If still not found → 404 returned.
+
+3. Password Matching
+const isPasswordMatched = await user.isPasswordMatched(password);
+isPasswordMatched() is most likely a custom method defined on your User schema.
+Internally, it probably uses bcrypt.compare(password, hashedPassword) to check.
+
+4. Get Secure Avatar URL
+const userUrl = await awsService.getSignedSingleUrl(user.userAvatar);
+The user.userAvatar is a file path or key stored on AWS S3.
+This function generates a signed URL so it can be accessed securely for a limited time.
+
+5. Remove Sensitive Fields
+const {
+  fullName,
+  email: userEmail,
+  phoneNumber,
+  userAvatar,
+  role: userRole,
+  sub_role,
+} = user;
+✅ You are correct — this is destructuring values from the user object.
+
+Then:
+const safeUser = {
+  fullName,
+  email: userEmail,
+  phoneNumber,
+  userAvatar: userUrl, // we use the signed URL instead of raw DB value
+  role: userRole,
+  sub_role,
+};
+This safeUser object is created to:
+Avoid exposing sensitive fields, like password, _id, createdAt, etc.
+Replace userAvatar value with the signed URL instead of the internal key.
+
+6. Token Generation
+const accessToken = generateToken(user._id); // JWT token with user ID
+const encryptedToken = encryptData(accessToken); // extra layer of encryption
+Then this encrypted token is sent in response.
+
+7. Final Response
+return res.status(200).json({
+  message: "Login successful",
+  role: user.role,
+  user: safeUser,
+  token: encryptedToken,
+  success: true,
+  error: false,
+});
+
+✅ Your Observations
+We are destructuring the values from user and setting to the safeUser — ✔️ Correct.
+We don’t want to send userAvatar as it is — ✔️ Yes, that’s why it's replaced with a signed URL.
+
+🧠 Side Note
+You could even write the destructuring more cleanly, but this is already readable and safe. This way of handling responses ensures:
+You don’t leak database-sensitive information.
+You return a user-friendly object.
+
+
+
+
+🧠 2. Authentication flow in detail
+✅ Step-by-step login flow:
+🔑 User logs in
+Enters email & password
+You send a request to the backend to validate the credentials
+
+🧾 Backend returns a token + user info
+You get a response like:
+
+json
+Copy
+Edit
+{
+  "token": "abc123...",
+  "user": {
+    "name": "Mahesh",
+    "email": "mahesh@example.com",
+    "role": "seller"
+  }
+}
+🧠 Redux saves token + user info
+You dispatch:
+
+js
+Copy
+Edit
+dispatch(login({ user, token, role }));
+This sets the auth slice:
+
+js
+Copy
+Edit
+{
+  isAuthenticated: true,
+  user: {...},
+  token: "abc123...",
+  role: "seller"
+}
+💾 Persist token using redux-persist
+Even if the user refreshes the browser, their token and login info won’t be lost.
+
+🧾 3. Making API calls with token
+In your form component, you access the token from Redux like:
+
+js
+Copy
+Edit
+const token = useSelector((state) => state.auth.token);
+Then when making a request:
+
+js
+Copy
+Edit
+await axios.post(`${BASE_URL}seller/referReq`, data, {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  }
+});
+✅ This means only authenticated users with a token can perform that action.
+
+🛡️ 4. Protecting Routes (Role-Based or Auth-Based)
+If you're using createBrowserRouter, here’s the structure:
+
+jsx
+Copy
+Edit
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Layout />,
+    children: [
+      { path: '', element: <Home /> },
+      { path: 'login', element: <Login /> },
+      {
+        path: 'dashboard',
+        element: <ProtectedRoute><Dashboard /></ProtectedRoute>,
+      }
+    ]
+  }
+])
+📌 ProtectedRoute component (important):
+This checks for token:
+
+jsx
+Copy
+Edit
+const ProtectedRoute = ({ children }) => {
+  const token = useSelector((state) => state.auth.token);
+  return token ? children : <Navigate to="/login" />;
+};
+If the user has a token, let them in. Otherwise, redirect to login.
+
+🧹 5. Logout Flow
+When user clicks logout:
+
+js
+Copy
+Edit
+dispatch(logout());
+Redux state becomes:
+
+js
+Copy
+Edit
+{
+  isAuthenticated: false,
+  user: null,
+  token: null,
+  role: null
+}
+Now:
+
+API calls will fail (token is gone)
+
+Protected routes will redirect to login
+
+✅ Summary
+Flow	What happens
+Login	Token is received and stored in Redux
+Persisted	Redux-Persist saves token across reloads
+API Call	Token is attached in Authorization header
+Protected Route	ProtectedRoute checks if token exists
+Logout	Clears token and user info from Redux

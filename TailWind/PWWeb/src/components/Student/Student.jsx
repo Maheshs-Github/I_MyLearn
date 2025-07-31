@@ -129,3 +129,14 @@ export default Student;
 // exporting Student with Student1 element,   it is okay
 // Let's see with  find and replace shortcut, search one too
 //Let's practice JS interview question Coding ones too
+// Let's see about this one 3️⃣ Improve input + button look with hover/focus/transition
+// js
+// Copy
+// Edit
+// <input className="border-2 rounded-md p-3 w-full focus:outline-none focus:border-blue-500 transition" />
+// js
+// Copy
+// Edit
+// <button className="border-2 rounded-md w-1/2 py-2 bg-blue-500 text-white hover:bg-blue-600 transition">
+//   Submit
+// </button>
